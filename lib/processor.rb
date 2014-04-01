@@ -35,8 +35,10 @@ module RFF
             @parser_status = :normal
             outputreader = OutputReader.new(progout)
             @rawoutput = []
+            @input_meta_common = {}
             @input_meta_audio = {}
             @input_meta_video = {}
+            @output_meta_common = {}
             @output_meta_audio = {}
             @output_meta_video = {}
             @processing_status = {}
@@ -63,11 +65,12 @@ module RFF
                 end
                 line.gsub!(/=[ ]+/, "=")
                 # Parsing
+                #puts "DEBUG: Line after spaces removal: " + line.to_s
                 #puts "DEBUG: Parsing line..."
                 if @conversion_type == :audio
                   if @parser_status == :meta
                     #puts "DEBUG: Parser in metadata parsing mode"
-                    if line[0..7] == "Duration" || line[0..5] == "Stream"
+                    if line[0..7] == "Duration" || line[0..5] == "Stream" || line[0] == "["
                       @parser_status = :normal
                     else
                       #puts "DEBUG: Reading metadata line..."
@@ -79,7 +82,7 @@ module RFF
                     end
                   end
                   if @parser_status == :strmap
-                    #uts "DEBUG: Parser in stream mapping parsing mode"
+                    #puts "DEBUG: Parser in stream mapping parsing mode"
                     #puts "DEBUG: Reading stream mapping information..."
                     @stream_mapping_audio = line[21..-2]
                     @parser_status = :retnormal
@@ -120,20 +123,20 @@ module RFF
                     elsif line[0..5] == "Stream"
                       #puts "DEBUG: Approached stream information line"
                       if @last_met_io == :input
-                        @input_format = line.split(",")[0][20..-1]
-                        @input_freq = line.split(",")[1][1..-1]
-                        @input_channelmode = line.split(",")[2][1..-1]
-                        @input_format_type = line.split(",")[3][1..-1]
+                        @audio_input_format = line.split(",")[0][20..-1]
+                        @audio_input_freq = line.split(",")[1][1..-1]
+                        @audio_input_channelmode = line.split(",")[2][1..-1]
+                        @audio_input_format_type = line.split(",")[3][1..-1]
                         if line.split(",")[4] != nil
-                          @input_bitrate2 = line.split(",")[4][1..-1]
+                          @audio_input_bitrate2 = line.split(",")[4][1..-1]
                         end
                       elsif @last_met_io == :output
-                        @output_format = line.split(",")[0][20..-1]
-                        @output_freq = line.split(",")[1][1..-1]
-                        @output_channelmode = line.split(",")[2][1..-1]
-                        @output_format_type = line.split(",")[3][1..-1]
+                        @audio_output_format = line.split(",")[0][20..-1]
+                        @audio_output_freq = line.split(",")[1][1..-1]
+                        @audio_output_channelmode = line.split(",")[2][1..-1]
+                        @audio_output_format_type = line.split(",")[3][1..-1]
                         if line.split(",")[4] != nil
-                          @output_bitrate2 = line.split(",")[4][1..-1]
+                          @audio_output_bitrate2 = line.split(",")[4][1..-1]
                         end
                       end
                     elsif line[0..3] == "size"
@@ -149,7 +152,127 @@ module RFF
                     @parser_status = :normal
                   end
                 elsif @conversion_type == :video
-                  puts "Not implemented yet... Just wait for the conversion to stop."
+                  if @parser_status == :meta
+                    #puts "DEBUG: Parser in metadata parsing mode"
+                    if line[0..7] == "Duration" || line[0..5] == "Stream" || line[0] == "["
+                      @parser_status = :normal
+                    else
+                      #puts "DEBUG: Reading metadata line..."
+                      if @last_met_io == :input
+                        if @last_stream_type == nil
+                          @input_meta_common[line.split(":")[0].downcase[0..-2].to_sym] = line.split(":")[1][1..-1]
+                        elsif @last_stream_type == :audio
+                          @input_meta_audio[line.split(":")[0].downcase[0..-2].to_sym] = line.split(":")[1][1..-1]
+                        elsif @last_stream_type == :video
+                          @input_meta_video[line.split(":")[0].downcase[0..-2].to_sym] = line.split(":")[1][1..-1]
+                        end
+                      elsif @last_met_io == :output
+                        if @last_stream_type == nil
+                          @output_meta_common[line.split(":")[0].downcase[0..-2].to_sym] = line.split(":")[1][1..-1]
+                        elsif @last_stream_type == :audio
+                          @output_meta_audio[line.split(":")[0].downcase[0..-2].to_sym] = line.split(":")[1][1..-1]
+                        elsif @last_stream_type == :video
+                          @output_meta_video[line.split(":")[0].downcase[0..-2].to_sym] = line.split(":")[1][1..-1]
+                        end
+                      end
+                    end
+                  end
+                 if @parser_status == :strmap
+                    #puts "DEBUG: Parser in stream mapping parsing mode"
+                    #puts "DEBUG: Reading stream mapping information..."
+                    @stream_mapping_video = line[21..-2]
+                    @parser_status = :strmap2
+                  elsif @parser_status == :strmap2
+                    @stream_mapping_audio = line[21..-2]
+                    @parser_status = :retnormal
+                  end
+                  if @parser_status == :normal
+                    #puts "DEBUG: Parser in normal mode"
+                    if line[0..5] == "ffmpeg"
+                      #puts "DEBUG: Approached version line"
+                      @ff_versionline = line
+                    elsif line[0..4] == "built"
+                      #puts "DEBUG: Approached build line"
+                      @ff_buildline = line
+                    elsif line[0..4] == "Input"
+                      #puts "DEBUG: Approached input declaration"
+                      @input_type = line.split(",")[1][1..-1]
+                      @last_met_io = :input
+                      @last_stream_type = nil
+                    elsif line[0..5] == "Output"
+                      #puts "DEBUG: Approached output declaration"
+                      @output_type = line.split(",")[1][1..-1]
+                      @last_met_io = :output
+                      @last_stream_type = nil
+                    elsif line == "Metadata:"
+                      #puts "DEBUG: Approached metadata start"
+                      @parser_status = :meta
+                    elsif line[0..7] == "Duration"
+                      #puts "DEBUG: Approached duration line"
+                      @input_duration = line.split(",")[0][10..-1]
+                      if line.split(",")[1][1..5] == "start"
+                        #puts "DEBUG: Detected start variation of the line"
+                        @input_start = line.split(",")[1][8..-1]
+                        @input_bitrate = line.split(",")[2][10..-1]
+                      else
+                        #puts "DEBUG: Detected only bitrate variation of the line"
+                        @input_bitrate = line.split(",")[1][10..-1]
+                      end
+                    elsif line == "Stream mapping:"
+                      #puts "DEBUG: Approached stream mapping declaration"
+                      @parser_status = :strmap
+                    elsif line[0..5] == "Stream"
+                      #puts "DEBUG: Approached stream information line"
+                      if line[13..17] == "Video"
+                        @last_stream_type = :video
+                      elsif line[13..17] == "Audio"
+                        @last_stream_type = :audio
+                      else
+                        @last_stream_type = nil
+                      end
+                      if @last_met_io == :input
+                        if @last_stream_type == :video
+                          @video_input_format = line.split(",")[0][20..-1]
+                          @video_input_colorspace = line.split(",")[1][1..-1]
+                          @video_input_resolution = line.split(",")[2][1..-1]
+                          @video_input_additional = line.split(",")[3..-1]
+                        elsif @last_stream_type == :audio
+                          @audio_input_format = line.split(",")[0][20..-1]
+                          @audio_input_freq = line.split(",")[1][1..-1]
+                          @audio_input_channelmode = line.split(",")[2][1..-1]
+                          @audio_input_format_type = line.split(",")[3][1..-1]
+                          if line.split(",")[4] != nil
+                            @audio_input_bitrate2 = line.split(",")[4][1..-1]
+                          end
+                        end
+                      elsif @last_met_io == :output
+                        if @last_stream_type == :video
+                          @video_output_format = line.split(",")[0][20..-1]
+                          @video_output_colorspace = line.split(",")[1][1..-1]
+                          @video_output_resolution = line.split(",")[2][1..-1]
+                          @video_output_additional = line.split(",")[3..-1]
+                        elsif @last_stream_type == :audio
+                          @audio_output_format = line.split(",")[0][20..-1]
+                          @audio_output_freq = line.split(",")[1][1..-1]
+                          @audio_output_channelmode = line.split(",")[2][1..-1]
+                          @audio_output_format_type = line.split(",")[3][1..-1]
+                          if line.split(",")[4] != nil
+                            @audio_output_bitrate2 = line.split(",")[4][1..-1]
+                          end
+                        end
+                      end
+                    elsif line[0..4] == "frame"
+                      #puts "DEBUG: Approached processing status line"
+                      line.split(" ").each do |spl|
+                        @processing_status[spl.split("=")[0].to_sym] = spl.split("=")[1]
+                      end
+                      @processing_percentage = ((((Time.parse(@processing_status[:time])-Time.parse("0:0"))/(Time.parse(@input_duration)-Time.parse("0:0")))).round(2)*100).to_i #/ This is for jEdit syntax highlighting to fix
+                    end
+                  end
+                  if @parser_status == :retnormal
+                    #puts "DEBUG: Parser returning to normal mode"
+                    @parser_status = :normal
+                  end
                 end
               end
             end while line != "EOF"
@@ -226,12 +349,20 @@ module RFF
       @parser_status
     end
     
+    def common_input_metadata
+      @input_meta_common
+    end
+    
     def audio_input_metadata
       @input_meta_audio
     end
     
     def video_input_metadata
       @input_meta_video
+    end
+    
+    def common_output_metadata
+      @output_meta_common
     end
     
     def audio_output_metadata
@@ -248,6 +379,10 @@ module RFF
     
     def audio_stream_mapping
       @stream_mapping_audio
+    end
+    
+    def video_stream_mapping
+      @stream_mapping_video
     end
     
     def ffmpeg_version_line
@@ -278,44 +413,76 @@ module RFF
       @input_bitrate
     end
     
-    def input_format
-      @input_format
+    def audio_input_format
+      @audio_input_format
     end
     
-    def input_frequency
-      @input_freq
+    def audio_input_frequency
+      @audio_input_freq
     end
     
-    def input_channelmode
-      @input_channelmode
+    def audio_input_channelmode
+      @audio_input_channelmode
     end
     
-    def input_format_type
-      @input_format_type
+    def audio_input_format_type
+      @audio_input_format_type
     end
     
-    def input_bitrate2
-      @input_bitrate2
+    def audio_input_bitrate2
+      @audio_input_bitrate2
     end
     
-    def output_format
-      @output_format
+    def audio_output_format
+      @audio_output_format
     end
     
-    def output_frequency
-      @output_freq
+    def audio_output_frequency
+      @audio_output_freq
     end
     
-    def output_channelmode
-      @output_channelmode
+    def audio_output_channelmode
+      @audio_output_channelmode
     end
     
-    def output_format_type
-      @output_format_type
+    def audio_output_format_type
+      @audio_output_format_type
     end
     
-    def output_bitrate2
-      @output_bitrate2
+    def audio_output_bitrate2
+      @audio_output_bitrate2
+    end
+    
+    def video_input_format
+      @video_input_format
+    end
+    
+    def video_input_colorspace
+      @video_input_colorspace
+    end
+    
+    def video_input_resolution
+      @video_input_resolution
+    end
+    
+    def video_input_additional
+      @video_input_additional
+    end
+    
+    def video_output_format
+      @video_output_format
+    end
+    
+    def video_output_colorspace
+      @video_output_colorspace
+    end
+    
+    def video_output_resolution
+      @video_output_resolution
+    end
+    
+    def video_output_additional
+      @video_output_additional
     end
     
     def processing_percentage
@@ -328,6 +495,11 @@ module RFF
     
     def command_exit_status
       @exit_status
+    end
+    
+    def kill
+      @processing_thread.kill
+      @status = :aborted
     end
   end
 end
