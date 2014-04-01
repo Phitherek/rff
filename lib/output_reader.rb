@@ -38,5 +38,9 @@ module RFF
     def join_reading_thread
       @reading_thread.join 
     end
+    
+    def get_raw_buffer
+      @@buffer
+    end
   end
 end
