@@ -4,7 +4,7 @@ require 'open3'
 require 'time'
 module RFF
   class Processor
-    def initialize input, output_type, output_path=nil, quality="5000k", custom_args=nil
+    def initialize input, output_type, output_path=nil, quality="5000k", custom_args=nil, recommended_audio_quality=true
       if input.nil? || input.empty? || output_type.nil?
         raise RFF::ArgumentError.new("Input and output type can not be empty nor nil!")
       end
@@ -18,16 +18,17 @@ module RFF
       @quality = quality
       @custom_args = custom_args
       if [:mp3, :ogg, :wav].include?(@output_type)
-        @command = "ffmpeg -y -i #{@input} -acodec #{@output_type == :mp3 ? "libmp3lame" : (@output_type == :ogg ? "libvorbis" : "pcm_s16le")}#{@custom_args.nil? ? "" : " #{@custom_args}"} #{@output_path}/#{@output_name}.#{@output_type.to_s}"
+        @command = "ffmpeg -y -i #{@input} -acodec #{@output_type == :mp3 ? "libmp3lame" : (@output_type == :ogg ? "libvorbis" : "pcm_s16le")}#{recommended_audio_quality ? (@output_type == :mp3 ? " -aq 2" : (@output_type == :ogg ? " -aq 4" : "")) : ""}#{@custom_args.nil? ? "" : " #{@custom_args}"} #{@output_path}/#{@output_name}.#{@output_type.to_s}"
         @conversion_type = :audio
       else
-        @command = "ffmpeg -y -i #{@input} -acodec #{(@output_type == :webm || @output_type == :ogv) ? "libvorbis" : "aac"} -vcodec #{@output_type == :webm ? "libvpx" : (@output_type == :ogv ? "libtheora" : "mpeg4")}#{@output_type == :mp4 ? " -strict -2" : ""}#{(!@quality.nil? && !@quality.empty?) ? " -b:v #{@quality}" : ""}#{@custom_args.nil? ? "" : " #{@custom_args}"} #{@output_path}/#{@output_name}.#{@output_type.to_s}"
+        @command = "ffmpeg -y -i #{@input} -acodec #{(@output_type == :webm || @output_type == :ogv) ? "libvorbis" : "aac"} -vcodec #{@output_type == :webm ? "libvpx" : (@output_type == :ogv ? "libtheora" : "mpeg4")}#{@output_type == :mp4 ? " -strict -2" : ""}#{(!@quality.nil? && !@quality.empty?) ? " -b:v #{@quality}" : ""}#{recommended_audio_quality ? (@output_type == :webm || @output_type == :ogv ? " -aq 4" : " -b:a 240k") : ""}#{@custom_args.nil? ? "" : " #{@custom_args}"} #{@output_path}/#{@output_name}.#{@output_type.to_s}"
         @conversion_type = :video
       end
       @status = :pending
     end
     
     def fire
+      @processing_percentage = 0
       @processing_thread = Thread.new do |th|
         begin
           Open3.popen2e(@command) do |progin, progout, progthread|
@@ -70,7 +71,7 @@ module RFF
                 if @conversion_type == :audio
                   if @parser_status == :meta
                     #puts "DEBUG: Parser in metadata parsing mode"
-                    if line[0..7] == "Duration" || line[0..5] == "Stream" || line[0] == "["
+                    if line[0..7] == "Duration" || line[0..5] == "Stream" || line[0] == "[" || line[0..5] == "Output" || line[0..4] == "Input" 
                       @parser_status = :normal
                     else
                       #puts "DEBUG: Reading metadata line..."
@@ -101,7 +102,7 @@ module RFF
                       @last_met_io = :input
                     elsif line[0..5] == "Output"
                       #puts "DEBUG: Approached output declaration"
-                      @output_type = line.split(",")[1][1..-1]
+                      @detected_output_type = line.split(",")[1][1..-1]
                       @last_met_io = :output
                     elsif line == "Metadata:"
                       #puts "DEBUG: Approached metadata start"
@@ -144,7 +145,9 @@ module RFF
                       line.split(" ").each do |spl|
                         @processing_status[spl.split("=")[0].to_sym] = spl.split("=")[1]
                       end
-                      @processing_percentage = ((((Time.parse(@processing_status[:time])-Time.parse("0:0"))/(Time.parse(@input_duration)-Time.parse("0:0")))).round(2)*100).to_i #/ This is for jEdit syntax highlighting to fix
+                      if @processing_status[:time] != nil && @input_duration != nil
+                        @processing_percentage = ((((Time.parse(@processing_status[:time])-Time.parse("0:0"))/(Time.parse(@input_duration)-Time.parse("0:0")))).round(2)*100).to_i #/ This is for jEdit syntax highlighting to fix
+                      end
                     end
                   end
                   if @parser_status == :retnormal
@@ -154,7 +157,7 @@ module RFF
                 elsif @conversion_type == :video
                   if @parser_status == :meta
                     #puts "DEBUG: Parser in metadata parsing mode"
-                    if line[0..7] == "Duration" || line[0..5] == "Stream" || line[0] == "["
+                    if line[0..7] == "Duration" || line[0..5] == "Stream" || line[0] == "[" || line[0..5] == "Output" || line[0..4] == "Input" 
                       @parser_status = :normal
                     else
                       #puts "DEBUG: Reading metadata line..."
@@ -201,7 +204,7 @@ module RFF
                       @last_stream_type = nil
                     elsif line[0..5] == "Output"
                       #puts "DEBUG: Approached output declaration"
-                      @output_type = line.split(",")[1][1..-1]
+                      @detected_output_type = line.split(",")[1][1..-1]
                       @last_met_io = :output
                       @last_stream_type = nil
                     elsif line == "Metadata:"
@@ -266,7 +269,9 @@ module RFF
                       line.split(" ").each do |spl|
                         @processing_status[spl.split("=")[0].to_sym] = spl.split("=")[1]
                       end
-                      @processing_percentage = ((((Time.parse(@processing_status[:time])-Time.parse("0:0"))/(Time.parse(@input_duration)-Time.parse("0:0")))).round(2)*100).to_i #/ This is for jEdit syntax highlighting to fix
+                      if @processing_status[:time] != nil && @input_duration != nil
+                        @processing_percentage = ((((Time.parse(@processing_status[:time])-Time.parse("0:0"))/(Time.parse(@input_duration)-Time.parse("0:0")))).round(2)*100).to_i #/ This is for jEdit syntax highlighting to fix
+                      end
                     end
                   end
                   if @parser_status == :retnormal
@@ -297,6 +302,7 @@ module RFF
           puts "Caught exception: " + e.to_s
           puts "Backtrace:"
           puts e.backtrace
+          @status = :failed
         end
       end
     end
@@ -307,6 +313,10 @@ module RFF
     
     def output_type
       @output_type
+    end
+    
+    def detected_output_type
+      @detected_output_type
     end
     
     def output_name
@@ -486,11 +496,11 @@ module RFF
     end
     
     def processing_percentage
-      @processing_percentage
+      @processing_percentage || 0
     end
     
     def format_processing_percentage
-      @processing_percentage.to_s + "%"
+      @processing_percentage.nil? ? "0%" : @processing_percentage.to_s + "%"
     end
     
     def command_exit_status
