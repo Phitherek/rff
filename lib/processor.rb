@@ -3,7 +3,20 @@ require_relative 'output_reader'
 require 'open3'
 require 'time'
 module RFF
+  
+  # The main processing class of the _rff_ gem. It spawns FFmpeg conversion process and parses its output, providing information about input and output files and current process status
+  
   class Processor
+    
+    # This constructor initializes the class with the following arguments:
+    # * _input_ <b>(required)</b> - the full path to the input file
+    # * <i>output_type</i> <b>(required)</b> - defines the type of the output. Must be one of [:mp3, :ogg, :wav] for audio conversion or [:mp4, :ogv, :webm] for video conversion
+    # * <i>output_path</i> - a path to place the output file in. Defaults to nil, which means that the input' s directory path is used
+    # * _quality_ - only affects video conversion. Sets the video conversion quality. Defaults to 5000k, which is tested value for good video conversion quality
+    # * <i>custom_args</i> - passes custom arguments to FFmpeg. Defaults to nil, which means no custom arguments are given
+    # * <i>recommended_audio_quality</i> - determines if recommended by FFmpeg community audio quality settings should be used. Defaults to true, which means audio conversion with good, recommended quality. Set to false if you are giving additional arguments that determine this quality.
+    # This method also validates arguments, determines full output name, generates appropriate FFmpeg command, determines conversion type and initializes status (it is :pending at this point).
+    
     def initialize input, output_type, output_path=nil, quality="5000k", custom_args=nil, recommended_audio_quality=true
       if input.nil? || input.empty? || output_type.nil?
         raise RFF::ArgumentError.new("Input and output type can not be empty nor nil!")
@@ -26,6 +39,8 @@ module RFF
       end
       @status = :pending
     end
+    
+    # This method runs the FFmpeg conversion process in a separate thread. First it initializes processing percentage and then spawns a new thread, in which FFmpeg conversion process is spawned through Open3.popen2e. It sets the processing status, passes the command output to OutputReader instance and initializes all the needed structures for information. Then it parses the output until it ends to extract the information, which is available through this class' getter methods. All the information is filled in as soon as it appears in the command output. When the process finishes, it cleans up the streams, sets percentage to 100% and gets the command' s exit status. Then it sets :completed or :failed status according to the command' s status. At the end it catches and displays any exceptions that can occur in the thread
     
     def fire
       @processing_percentage = 0
@@ -307,205 +322,301 @@ module RFF
       end
     end
     
+    # This method returns full input path
+    
     def input
       @input
     end
     
+    # This method returns output type read from the filename
+    
     def output_type
       @output_type
     end
+    
+    # This method returns output type read by FFmpeg
     
     def detected_output_type
       @detected_output_type
     end
     
+    # This method returns full output name
+    
     def output_name
       @output_name
     end
+    
+    # This method returns path where the output is (being) saved
     
     def output_path
       @output_path
     end
     
+    # This method returns used video quality
+    
     def quality
       @quality
     end
+    
+    # This method returns the FFmpeg command used for conversion
     
     def command
       @command
     end
     
+    # This method returns custom arguments passed to FFmpeg
+    
     def custom_args
       @custom_args
     end
+    
+    # This method returns conversion type (:audio or :video)
     
     def conversion_type
       @conversion_type
     end
     
+    # This method returns full path to the output file
+    
     def full_output_path
       "#{@output_path}/#{@output_name}.#{@output_type.to_s}"
     end
       
+    # This method returns raw command output as an array of lines after getting rid of unneeded whitespaces
+    
     def raw_command_output
       @rawoutput
     end
+    
+    # This method returns current processing status (:pending, :processing, :completed, :failed, :aborted)
     
     def status
       @status
     end
     
+    # This method returns current output parser status
+    
     def parser_status
       @parser_status
     end
+    
+    # This method returns common metadata for input streams as a hash with keys being symbols representing each metadata downcased name
     
     def common_input_metadata
       @input_meta_common
     end
     
+    # This method returns metadata for audio input stream as a hash with keys being symbols representing each metadata downcased name
+    
     def audio_input_metadata
       @input_meta_audio
     end
+    
+    # This method returns metadata for video input stream as a hash with keys being symbols representing each metadata downcased name
     
     def video_input_metadata
       @input_meta_video
     end
     
+     # This method returns common metadata for output streams as a hash with keys being symbols representing each metadata downcased name
+    
     def common_output_metadata
       @output_meta_common
     end
+    
+    # This method returns metadata for audio output stream as a hash with keys being symbols representing each metadata downcased name
     
     def audio_output_metadata
       @output_meta_audio
     end
     
+    # This method returns metadata for video output stream as a hash with keys being symbols representing each metadata downcased name
+    
     def video_output_metadata
       @output_meta_video
     end
+    
+    # This method returns a hash which represents current processing status (eg. frames processed, time processed etc.) with keys being symbols representing each status value
     
     def processing_status
       @processing_status
     end
     
+    # This method returns audio stream mapping information (input_format -> output_format)
+    
     def audio_stream_mapping
       @stream_mapping_audio
     end
+    
+    # This method returns video stream mapping information (input_format -> output_format)
     
     def video_stream_mapping
       @stream_mapping_video
     end
     
+    # This method returns FFmpeg version line
+    
     def ffmpeg_version_line
       @ff_versionline
     end
+    
+    # This method returns FFmpeg build line
     
     def ffmpeg_build_line
       @ff_buildline
     end
     
+    # This method returns input type detected by FFmpeg
+    
     def input_type
       @input_type
     end
     
-    def output_type
-      @output_type
-    end
+    # This method returns input duration
     
     def input_duration
       @input_duration
     end
     
+    # This method returns start point of the input
+    
     def input_start
       @input_start
     end
+    
+    # This method returns input bitrate (from the duration line)
     
     def input_bitrate
       @input_bitrate
     end
     
+    # This method returns format of audio input
+    
     def audio_input_format
       @audio_input_format
     end
+    
+    # This method returns frequency of audio input
     
     def audio_input_frequency
       @audio_input_freq
     end
     
+    # This method returns channel mode (eg. mono, stereo) of audio input
+    
     def audio_input_channelmode
       @audio_input_channelmode
     end
+    
+    # This method returns type of format of audio input
     
     def audio_input_format_type
       @audio_input_format_type
     end
     
+    # This method returns bitrate of audio input (from input information line)
+    
     def audio_input_bitrate2
       @audio_input_bitrate2
     end
+    
+    # This method returns format of audio output
     
     def audio_output_format
       @audio_output_format
     end
     
+    # This method returns frequency of audio output
+    
     def audio_output_frequency
       @audio_output_freq
     end
+    
+    # This method returns channel mode (eg. mono, stereo) of audio output
     
     def audio_output_channelmode
       @audio_output_channelmode
     end
     
+    # This method returns type of format of audio output
+    
     def audio_output_format_type
       @audio_output_format_type
     end
+    
+    # This method returns bitrate of audio output (from output information line)
     
     def audio_output_bitrate2
       @audio_output_bitrate2
     end
     
+    # This method returns format of video input
+    
     def video_input_format
       @video_input_format
     end
+    
+    # This method returns color space of video input
     
     def video_input_colorspace
       @video_input_colorspace
     end
     
+    # This method returns resolution of video input
+    
     def video_input_resolution
       @video_input_resolution
     end
+    
+    # This method returns additional information about video input as an array of values
     
     def video_input_additional
       @video_input_additional
     end
     
+    # This method returns format of video output
+    
     def video_output_format
       @video_output_format
     end
+    
+    # This method returns color space of video output
     
     def video_output_colorspace
       @video_output_colorspace
     end
     
+    # This method returns resolution of video output
+    
     def video_output_resolution
       @video_output_resolution
     end
+    
+    # This method returns additional information about video output as an array of values
     
     def video_output_additional
       @video_output_additional
     end
     
+    # This method returns percentage of process completion
+    
     def processing_percentage
       @processing_percentage || 0
     end
+    
+    # This method returns percentage of process completion formatted for output
     
     def format_processing_percentage
       @processing_percentage.nil? ? "0%" : @processing_percentage.to_s + "%"
     end
     
+    # This method returns the exit status of the FFmpeg command
+    
     def command_exit_status
       @exit_status
     end
+    
+    # This method kills processing thread and sets status to :aborted
     
     def kill
       @processing_thread.kill

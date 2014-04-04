@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>README - RDoc Documentation</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body class="file">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+<div id="table-of-contents">
+  <nav class="section">
+    <h3 class="section-header">Table of Contents</h3>
+    <ul>
+      <li><a href="#label-rff+-+A+Ruby+gem+for+simple+audio+and+video+conversion+for+HTML5+using+FFmpeg"><em>rff</em> - A Ruby gem for simple audio and video conversion for HTML5 using FFmpeg</a>
+      <li><a href="#label-Introduction">Introduction</a>
+      <li><a href="#label-Changelog">Changelog</a>
+      <li><a href="#label-Installation">Installation</a>
+      <li><a href="#label-Usage">Usage</a>
+      <li><a href="#label-Gem+status">Gem status</a>
+      <li><a href="#label-Important+information">Important information</a>
+    </ul>
+  </nav>
+</div>
+
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./README_rdoc.html">README</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./RFF.html">RFF</a>
+  
+    <li><a href="./RFF/ArgumentError.html">RFF::ArgumentError</a>
+  
+    <li><a href="./RFF/AudioHandler.html">RFF::AudioHandler</a>
+  
+    <li><a href="./RFF/OutputReader.html">RFF::OutputReader</a>
+  
+    <li><a href="./RFF/ProcessingFailure.html">RFF::ProcessingFailure</a>
+  
+    <li><a href="./RFF/Processor.html">RFF::Processor</a>
+  
+    <li><a href="./RFF/VideoHandler.html">RFF::VideoHandler</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation" class="description">
+  
+<h1 id="label-rff+-+A+Ruby+gem+for+simple+audio+and+video+conversion+for+HTML5+using+FFmpeg"><em>rff</em> - A Ruby gem for simple audio and video conversion for HTML5 using FFmpeg<span><a href="#label-rff+-+A+Ruby+gem+for+simple+audio+and+video+conversion+for+HTML5+using+FFmpeg">&para;</a> <a href="#documentation">&uarr;</a></span></h1>
+<hr style="height: 1px">
+
+<h2 id="label-Introduction">Introduction<span><a href="#label-Introduction">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p>Are you tired of <strong>outdated, not working gems</strong> for dealing
+with <strong>audio and video conversion</strong>? Are you looking for
+something <strong>simple</strong> to <strong>convert media files</strong>
+in your Rails application to <strong>HTML5 formats</strong>? If so, then
+<strong><em>rff</em> is just what you need!</strong></p>
+
+<p>The idea behind <em>rff</em> is to be <strong>simple media converting
+gem</strong> based on <strong>FFmpeg</strong> providing basic functionality
+for <strong>converting various media files</strong> so they can be
+displayed in <strong>HTML5 audio and video tags</strong>, providing
+<strong>command output</strong> and also <strong>parsing it to extract
+information about the status of conversion process</strong> (eg. percentage
+done, length of processed file etc.).</p>
+<hr style="height: 1px">
+
+<h2 id="label-Changelog">Changelog<span><a href="#label-Changelog">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+<ul><li>
+<p>version 0.1 - Written the gem classes</p>
+</li><li>
+<p>version 0.2 - Got rid of the bug with mixing outputs in OutputReader&#39; s
+buffer (was a static variable, now it is instance variable. Yeah, WHAT WAS
+I THINKING then?). Documented the code. Made small bugfixes.</p>
+</li></ul>
+<hr style="height: 1px">
+
+<h2 id="label-Installation">Installation<span><a href="#label-Installation">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p>As <em>rff</em> is available on <a
+href="http://www.rubygems.org">www.rubygems.org</a>, all you have to do is
+to add:</p>
+
+<pre>gem &#39;rff&#39;</pre>
+
+<p>to your Gemfile. Alternatively you can install it via:</p>
+
+<pre>gem install rff</pre>
+
+<p>command.</p>
+<hr style="height: 1px">
+
+<h2 id="label-Usage">Usage<span><a href="#label-Usage">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p>The piece of code below converts a wav file to ogg, displaying the
+percentage of process completion along:</p>
+
+<pre>proc = RFF::Processor.new(&quot;file.wav&quot;, :ogg)
+proc.fire
+while proc.processing_percentage &lt; 100
+  print &quot;Completed: &quot; + proc.format_processing_percentage
+end</pre>
+
+<p>The Processor class construction above implies that the ogg file is placed
+in the same directory that the wav file and the default options are used -
+they provide good quality of conversion. If you want to change this
+behaviour, please read the documentation. You can input every format
+supported by FFmpeg, output format must be one of HTML5 compliant media
+formats - mp3, ogg or wav for audio and mp4, ogv or webm for video. The
+Processor class also parses a wide variety of information about input and
+output files - read the documentation to learn how to get it.</p>
+
+<p>The piece of code below converts a wav audio file to all formats needed by
+HTML5 to correctly handle media with audio tag and display the overall and
+partial completion percentages along:</p>
+
+<pre>ah = RFF::AudioHandler.new(&quot;file.wav&quot;)
+ah.fire_all
+while ah.processing_percentage == nil || ah.processing_percentage &lt; 100
+  if ah.mp3_processor != nil
+    puts &quot;MP3 status: &quot; + ah.mp3_processor.format_processing_percentage
+  end
+  if ah.ogg_processor != nil
+    puts &quot;OGG status: &quot; + ah.ogg_processor.format_processing_percentage
+  end
+  if ah.wav_processor != nil
+    puts &quot;WAV status: &quot; + ah.wav_processor.format_processing_percentage
+  end
+  puts &quot;Overall status: &quot; + ah.format_processing_percentage
+  sleep(1)
+end</pre>
+
+<p>The constructor of AudioHandler takes the same parameters that this of
+Processor, except of output type and video quality. If a given file is
+already in the HTML5 compliant format, the processor to this format is not
+created (as the original file can be used as a source then). To learn more,
+read the documentation.</p>
+
+<p>The piece of code below converts a ogv video file to all formats needed by
+HTML5 to correctly handle media with video tag and display the overall and
+partial completion percentages along:</p>
+
+<pre>vh = RFF::VideoHandler.new(&quot;file.ogv&quot;)
+vh.fire_all
+while vh.processing_percentage == nil || vh.processing_percentage &lt; 100
+  if vh.mp4_processor != nil
+    puts &quot;MP4 status: &quot; + vh.mp4_processor.format_processing_percentage
+  end
+  if vh.ogv_processor != nil
+    puts &quot;OGV status: &quot; + vh.ogv_processor.format_processing_percentage
+  end
+  if vh.webm_processor != nil
+    puts &quot;WEBM status: &quot; + vh.webm_processor.format_processing_percentage
+  end
+  puts &quot;Overall status: &quot; + vh.format_processing_percentage
+  sleep(1)
+end</pre>
+
+<p>The constructor of VideoHandler takes the same parameters that this of
+Processor, except of output type. If a given file is already in the HTML5
+compliant format, the processor to this format is not created (as the
+original file can be used as a source then). To learn more, read the
+documentation.</p>
+<hr style="height: 1px">
+
+<h2 id="label-Gem+status">Gem status<span><a href="#label-Gem+status">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p>Version 0.2 with an important bugfix is out!</p>
+<hr style="height: 1px">
+
+<h2 id="label-Important+information">Important information<span><a href="#label-Important+information">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+<ul><li>
+<p>The default arguments of the processor and handlers have been set to
+provide quite good quality of audio and video by default (unlike
+FFmpeg&#39; s defaults). However, they are fully customizable by method
+options.</p>
+</li><li>
+<p>The handlers are now safe to use.</p>
+</li><li>
+<p>There are <strong>automatic RSpec tests</strong> in <em>spec</em>
+subdirectory and also some <strong>manual/custom tests </strong> in
+<em>simpletests</em> directory.</p>
+</li><li>
+<p><strong>Any</strong> help with the known and not yet known issues is
+appreciated, <strong>even simple feedback</strong>.</p>
+</li></ul>
+<hr style="height: 1px">
+
+<p>I hope you find rff useful and enjoyable to use!</p>
+
+</div>
+
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

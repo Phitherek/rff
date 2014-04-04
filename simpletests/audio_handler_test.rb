@@ -1,6 +1,6 @@
 require_relative '../lib/audio_handler'
 ah = RFF::AudioHandler.new("testfile.wav")
-ah.fire_sequential
+ah.fire_all
 while ah.processing_percentage == nil || ah.processing_percentage < 100
   if ah.mp3_processor != nil
     puts "MP3 status: " + ah.mp3_processor.format_processing_percentage

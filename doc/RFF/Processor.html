@@ -1,0 +1,2333 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class RFF::Processor - RDoc Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/processor.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-audio_input_bitrate2">#audio_input_bitrate2</a>
+    
+    <li ><a href="#method-i-audio_input_channelmode">#audio_input_channelmode</a>
+    
+    <li ><a href="#method-i-audio_input_format">#audio_input_format</a>
+    
+    <li ><a href="#method-i-audio_input_format_type">#audio_input_format_type</a>
+    
+    <li ><a href="#method-i-audio_input_frequency">#audio_input_frequency</a>
+    
+    <li ><a href="#method-i-audio_input_metadata">#audio_input_metadata</a>
+    
+    <li ><a href="#method-i-audio_output_bitrate2">#audio_output_bitrate2</a>
+    
+    <li ><a href="#method-i-audio_output_channelmode">#audio_output_channelmode</a>
+    
+    <li ><a href="#method-i-audio_output_format">#audio_output_format</a>
+    
+    <li ><a href="#method-i-audio_output_format_type">#audio_output_format_type</a>
+    
+    <li ><a href="#method-i-audio_output_frequency">#audio_output_frequency</a>
+    
+    <li ><a href="#method-i-audio_output_metadata">#audio_output_metadata</a>
+    
+    <li ><a href="#method-i-audio_stream_mapping">#audio_stream_mapping</a>
+    
+    <li ><a href="#method-i-command">#command</a>
+    
+    <li ><a href="#method-i-command_exit_status">#command_exit_status</a>
+    
+    <li ><a href="#method-i-common_input_metadata">#common_input_metadata</a>
+    
+    <li ><a href="#method-i-common_output_metadata">#common_output_metadata</a>
+    
+    <li ><a href="#method-i-conversion_type">#conversion_type</a>
+    
+    <li ><a href="#method-i-custom_args">#custom_args</a>
+    
+    <li ><a href="#method-i-detected_output_type">#detected_output_type</a>
+    
+    <li ><a href="#method-i-ffmpeg_build_line">#ffmpeg_build_line</a>
+    
+    <li ><a href="#method-i-ffmpeg_version_line">#ffmpeg_version_line</a>
+    
+    <li ><a href="#method-i-fire">#fire</a>
+    
+    <li ><a href="#method-i-format_processing_percentage">#format_processing_percentage</a>
+    
+    <li ><a href="#method-i-full_output_path">#full_output_path</a>
+    
+    <li ><a href="#method-i-input">#input</a>
+    
+    <li ><a href="#method-i-input_bitrate">#input_bitrate</a>
+    
+    <li ><a href="#method-i-input_duration">#input_duration</a>
+    
+    <li ><a href="#method-i-input_start">#input_start</a>
+    
+    <li ><a href="#method-i-input_type">#input_type</a>
+    
+    <li ><a href="#method-i-kill">#kill</a>
+    
+    <li ><a href="#method-i-output_name">#output_name</a>
+    
+    <li ><a href="#method-i-output_path">#output_path</a>
+    
+    <li ><a href="#method-i-output_type">#output_type</a>
+    
+    <li ><a href="#method-i-parser_status">#parser_status</a>
+    
+    <li ><a href="#method-i-processing_percentage">#processing_percentage</a>
+    
+    <li ><a href="#method-i-processing_status">#processing_status</a>
+    
+    <li ><a href="#method-i-quality">#quality</a>
+    
+    <li ><a href="#method-i-raw_command_output">#raw_command_output</a>
+    
+    <li ><a href="#method-i-status">#status</a>
+    
+    <li ><a href="#method-i-video_input_additional">#video_input_additional</a>
+    
+    <li ><a href="#method-i-video_input_colorspace">#video_input_colorspace</a>
+    
+    <li ><a href="#method-i-video_input_format">#video_input_format</a>
+    
+    <li ><a href="#method-i-video_input_metadata">#video_input_metadata</a>
+    
+    <li ><a href="#method-i-video_input_resolution">#video_input_resolution</a>
+    
+    <li ><a href="#method-i-video_output_additional">#video_output_additional</a>
+    
+    <li ><a href="#method-i-video_output_colorspace">#video_output_colorspace</a>
+    
+    <li ><a href="#method-i-video_output_format">#video_output_format</a>
+    
+    <li ><a href="#method-i-video_output_metadata">#video_output_metadata</a>
+    
+    <li ><a href="#method-i-video_output_resolution">#video_output_resolution</a>
+    
+    <li ><a href="#method-i-video_stream_mapping">#video_stream_mapping</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../README_rdoc.html">README</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../RFF.html">RFF</a>
+  
+    <li><a href="../RFF/ArgumentError.html">RFF::ArgumentError</a>
+  
+    <li><a href="../RFF/AudioHandler.html">RFF::AudioHandler</a>
+  
+    <li><a href="../RFF/OutputReader.html">RFF::OutputReader</a>
+  
+    <li><a href="../RFF/ProcessingFailure.html">RFF::ProcessingFailure</a>
+  
+    <li><a href="../RFF/Processor.html">RFF::Processor</a>
+  
+    <li><a href="../RFF/VideoHandler.html">RFF::VideoHandler</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class RFF::Processor</h1>
+
+  <div id="description" class="description">
+    
+<p>The main processing class of the <em>rff</em> gem. It spawns FFmpeg
+conversion process and parses its output, providing information about input
+and output files and current process status</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(input, output_type, output_path=nil, quality="5000k", custom_args=nil, recommended_audio_quality=true)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This constructor initializes the class with the following arguments:</p>
+<ul><li>
+<p><em>input</em> <strong>(required)</strong> - the full path to the input
+file</p>
+</li><li>
+<p><em>output_type</em> <strong>(required)</strong> - defines the type of the
+output. Must be one of [:mp3, :ogg, :wav] for audio conversion or [:mp4,
+:ogv, :webm] for video conversion</p>
+</li><li>
+<p><em>output_path</em> - a path to place the output file in. Defaults to nil,
+which means that the input&#39; s directory path is used</p>
+</li><li>
+<p><em>quality</em> - only affects video conversion. Sets the video conversion
+quality. Defaults to 5000k, which is tested value for good video conversion
+quality</p>
+</li><li>
+<p><em>custom_args</em> - passes custom arguments to FFmpeg. Defaults to nil,
+which means no custom arguments are given</p>
+</li><li>
+<p><em>recommended_audio_quality</em> - determines if recommended by FFmpeg
+community audio quality settings should be used. Defaults to true, which
+means audio conversion with good, recommended quality. Set to false if you
+are giving additional arguments that determine this quality.</p>
+</li></ul>
+
+<p>This method also validates arguments, determines full output name,
+generates appropriate FFmpeg command, determines conversion type and
+initializes status (it is :pending at this point).</p>
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 20</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">input</span>, <span class="ruby-identifier">output_type</span>, <span class="ruby-identifier">output_path</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">quality</span>=<span class="ruby-string">&quot;5000k&quot;</span>, <span class="ruby-identifier">custom_args</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">recommended_audio_quality</span>=<span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">input</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">input</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">output_type</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">RFF</span><span class="ruby-operator">::</span><span class="ruby-constant">ArgumentError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;Input and output type can not be empty nor nil!&quot;</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span>[<span class="ruby-value">:mp3</span>, <span class="ruby-value">:ogg</span>, <span class="ruby-value">:wav</span>, <span class="ruby-value">:mp4</span>, <span class="ruby-value">:webm</span>, <span class="ruby-value">:ogv</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">output_type</span>.<span class="ruby-identifier">to_sym</span>)
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">RFF</span><span class="ruby-operator">::</span><span class="ruby-constant">ArgumentError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;Output type must be one of [:mp3, :ogg, :wav, :mp4, :webm, :ogv]!&quot;</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@input</span> = <span class="ruby-identifier">input</span>
+  <span class="ruby-ivar">@output_type</span> = <span class="ruby-identifier">output_type</span>
+  <span class="ruby-ivar">@output_name</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-ivar">@input</span>).<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;.&quot;</span>)[<span class="ruby-value">0</span>]
+  <span class="ruby-ivar">@output_path</span> = <span class="ruby-identifier">output_path</span> <span class="ruby-operator">||</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">input</span>)
+  <span class="ruby-ivar">@quality</span> = <span class="ruby-identifier">quality</span>
+  <span class="ruby-ivar">@custom_args</span> = <span class="ruby-identifier">custom_args</span>
+  <span class="ruby-keyword">if</span> [<span class="ruby-value">:mp3</span>, <span class="ruby-value">:ogg</span>, <span class="ruby-value">:wav</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-ivar">@output_type</span>)
+    <span class="ruby-ivar">@command</span> = <span class="ruby-node">&quot;ffmpeg -y -i #{@input} -acodec #{@output_type == :mp3 ? &quot;libmp3lame&quot; : (@output_type == :ogg ? &quot;libvorbis&quot; : &quot;pcm_s16le&quot;)}#{recommended_audio_quality ? (@output_type == :mp3 ? &quot; -aq 2&quot; : (@output_type == :ogg ? &quot; -aq 4&quot; : &quot;&quot;)) : &quot;&quot;}#{@custom_args.nil? ? &quot;&quot; : &quot; #{@custom_args}&quot;} #{@output_path}/#{@output_name}.#{@output_type.to_s}&quot;</span>
+    <span class="ruby-ivar">@conversion_type</span> = <span class="ruby-value">:audio</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@command</span> = <span class="ruby-node">&quot;ffmpeg -y -i #{@input} -acodec #{(@output_type == :webm || @output_type == :ogv) ? &quot;libvorbis&quot; : &quot;aac&quot;} -vcodec #{@output_type == :webm ? &quot;libvpx&quot; : (@output_type == :ogv ? &quot;libtheora&quot; : &quot;mpeg4&quot;)}#{@output_type == :mp4 ? &quot; -strict -2&quot; : &quot;&quot;}#{(!@quality.nil? &amp;&amp; !@quality.empty?) ? &quot; -b:v #{@quality}&quot; : &quot;&quot;}#{recommended_audio_quality ? (@output_type == :webm || @output_type == :ogv ? &quot; -aq 4&quot; : &quot; -b:a 240k&quot;) : &quot;&quot;}#{@custom_args.nil? ? &quot;&quot; : &quot; #{@custom_args}&quot;} #{@output_path}/#{@output_name}.#{@output_type.to_s}&quot;</span>
+    <span class="ruby-ivar">@conversion_type</span> = <span class="ruby-value">:video</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@status</span> = <span class="ruby-value">:pending</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-audio_input_bitrate2" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">audio_input_bitrate2</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns bitrate of audio input (from input information line)</p>
+          
+          
+
+          
+          <div class="method-source-code" id="audio_input_bitrate2-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 519</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">audio_input_bitrate2</span>
+  <span class="ruby-ivar">@audio_input_bitrate2</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- audio_input_bitrate2-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- audio_input_bitrate2-method -->
+
+    
+      <div id="method-i-audio_input_channelmode" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">audio_input_channelmode</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns channel mode (eg. mono, stereo) of audio input</p>
+          
+          
+
+          
+          <div class="method-source-code" id="audio_input_channelmode-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 507</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">audio_input_channelmode</span>
+  <span class="ruby-ivar">@audio_input_channelmode</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- audio_input_channelmode-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- audio_input_channelmode-method -->
+
+    
+      <div id="method-i-audio_input_format" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">audio_input_format</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns format of audio input</p>
+          
+          
+
+          
+          <div class="method-source-code" id="audio_input_format-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 495</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">audio_input_format</span>
+  <span class="ruby-ivar">@audio_input_format</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- audio_input_format-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- audio_input_format-method -->
+
+    
+      <div id="method-i-audio_input_format_type" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">audio_input_format_type</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns type of format of audio input</p>
+          
+          
+
+          
+          <div class="method-source-code" id="audio_input_format_type-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 513</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">audio_input_format_type</span>
+  <span class="ruby-ivar">@audio_input_format_type</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- audio_input_format_type-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- audio_input_format_type-method -->
+
+    
+      <div id="method-i-audio_input_frequency" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">audio_input_frequency</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns frequency of audio input</p>
+          
+          
+
+          
+          <div class="method-source-code" id="audio_input_frequency-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 501</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">audio_input_frequency</span>
+  <span class="ruby-ivar">@audio_input_freq</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- audio_input_frequency-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- audio_input_frequency-method -->
+
+    
+      <div id="method-i-audio_input_metadata" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">audio_input_metadata</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns metadata for audio input stream as a hash with keys
+being symbols representing each metadata downcased name</p>
+          
+          
+
+          
+          <div class="method-source-code" id="audio_input_metadata-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 411</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">audio_input_metadata</span>
+  <span class="ruby-ivar">@input_meta_audio</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- audio_input_metadata-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- audio_input_metadata-method -->
+
+    
+      <div id="method-i-audio_output_bitrate2" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">audio_output_bitrate2</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns bitrate of audio output (from output information line)</p>
+          
+          
+
+          
+          <div class="method-source-code" id="audio_output_bitrate2-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 549</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">audio_output_bitrate2</span>
+  <span class="ruby-ivar">@audio_output_bitrate2</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- audio_output_bitrate2-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- audio_output_bitrate2-method -->
+
+    
+      <div id="method-i-audio_output_channelmode" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">audio_output_channelmode</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns channel mode (eg. mono, stereo) of audio output</p>
+          
+          
+
+          
+          <div class="method-source-code" id="audio_output_channelmode-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 537</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">audio_output_channelmode</span>
+  <span class="ruby-ivar">@audio_output_channelmode</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- audio_output_channelmode-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- audio_output_channelmode-method -->
+
+    
+      <div id="method-i-audio_output_format" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">audio_output_format</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns format of audio output</p>
+          
+          
+
+          
+          <div class="method-source-code" id="audio_output_format-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 525</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">audio_output_format</span>
+  <span class="ruby-ivar">@audio_output_format</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- audio_output_format-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- audio_output_format-method -->
+
+    
+      <div id="method-i-audio_output_format_type" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">audio_output_format_type</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns type of format of audio output</p>
+          
+          
+
+          
+          <div class="method-source-code" id="audio_output_format_type-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 543</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">audio_output_format_type</span>
+  <span class="ruby-ivar">@audio_output_format_type</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- audio_output_format_type-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- audio_output_format_type-method -->
+
+    
+      <div id="method-i-audio_output_frequency" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">audio_output_frequency</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns frequency of audio output</p>
+          
+          
+
+          
+          <div class="method-source-code" id="audio_output_frequency-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 531</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">audio_output_frequency</span>
+  <span class="ruby-ivar">@audio_output_freq</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- audio_output_frequency-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- audio_output_frequency-method -->
+
+    
+      <div id="method-i-audio_output_metadata" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">audio_output_metadata</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns metadata for audio output stream as a hash with keys
+being symbols representing each metadata downcased name</p>
+          
+          
+
+          
+          <div class="method-source-code" id="audio_output_metadata-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 429</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">audio_output_metadata</span>
+  <span class="ruby-ivar">@output_meta_audio</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- audio_output_metadata-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- audio_output_metadata-method -->
+
+    
+      <div id="method-i-audio_stream_mapping" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">audio_stream_mapping</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns audio stream mapping information (input_format -&gt;
+output_format)</p>
+          
+          
+
+          
+          <div class="method-source-code" id="audio_stream_mapping-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 447</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">audio_stream_mapping</span>
+  <span class="ruby-ivar">@stream_mapping_audio</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- audio_stream_mapping-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- audio_stream_mapping-method -->
+
+    
+      <div id="method-i-command" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">command</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns the FFmpeg command used for conversion</p>
+          
+          
+
+          
+          <div class="method-source-code" id="command-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 363</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">command</span>
+  <span class="ruby-ivar">@command</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- command-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- command-method -->
+
+    
+      <div id="method-i-command_exit_status" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">command_exit_status</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns the exit status of the FFmpeg command</p>
+          
+          
+
+          
+          <div class="method-source-code" id="command_exit_status-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 615</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">command_exit_status</span>
+  <span class="ruby-ivar">@exit_status</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- command_exit_status-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- command_exit_status-method -->
+
+    
+      <div id="method-i-common_input_metadata" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">common_input_metadata</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns common metadata for input streams as a hash with keys
+being symbols representing each metadata downcased name</p>
+          
+          
+
+          
+          <div class="method-source-code" id="common_input_metadata-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 405</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">common_input_metadata</span>
+  <span class="ruby-ivar">@input_meta_common</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- common_input_metadata-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- common_input_metadata-method -->
+
+    
+      <div id="method-i-common_output_metadata" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">common_output_metadata</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns common metadata for output streams as a hash with keys
+being symbols representing each metadata downcased name</p>
+          
+          
+
+          
+          <div class="method-source-code" id="common_output_metadata-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 423</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">common_output_metadata</span>
+  <span class="ruby-ivar">@output_meta_common</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- common_output_metadata-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- common_output_metadata-method -->
+
+    
+      <div id="method-i-conversion_type" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">conversion_type</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns conversion type (:audio or :video)</p>
+          
+          
+
+          
+          <div class="method-source-code" id="conversion_type-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 375</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">conversion_type</span>
+  <span class="ruby-ivar">@conversion_type</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- conversion_type-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- conversion_type-method -->
+
+    
+      <div id="method-i-custom_args" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">custom_args</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns custom arguments passed to FFmpeg</p>
+          
+          
+
+          
+          <div class="method-source-code" id="custom_args-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 369</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">custom_args</span>
+  <span class="ruby-ivar">@custom_args</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- custom_args-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- custom_args-method -->
+
+    
+      <div id="method-i-detected_output_type" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">detected_output_type</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns output type read by FFmpeg</p>
+          
+          
+
+          
+          <div class="method-source-code" id="detected_output_type-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 339</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">detected_output_type</span>
+  <span class="ruby-ivar">@detected_output_type</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- detected_output_type-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- detected_output_type-method -->
+
+    
+      <div id="method-i-ffmpeg_build_line" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ffmpeg_build_line</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns FFmpeg build line</p>
+          
+          
+
+          
+          <div class="method-source-code" id="ffmpeg_build_line-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 465</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ffmpeg_build_line</span>
+  <span class="ruby-ivar">@ff_buildline</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- ffmpeg_build_line-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- ffmpeg_build_line-method -->
+
+    
+      <div id="method-i-ffmpeg_version_line" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ffmpeg_version_line</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns FFmpeg version line</p>
+          
+          
+
+          
+          <div class="method-source-code" id="ffmpeg_version_line-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 459</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ffmpeg_version_line</span>
+  <span class="ruby-ivar">@ff_versionline</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- ffmpeg_version_line-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- ffmpeg_version_line-method -->
+
+    
+      <div id="method-i-fire" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">fire</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method runs the FFmpeg conversion process in a separate thread. First
+it initializes processing percentage and then spawns a new thread, in which
+FFmpeg conversion process is spawned through Open3.popen2e. It sets the
+processing status, passes the command output to <a
+href="OutputReader.html">OutputReader</a> instance and initializes all the
+needed structures for information. Then it parses the output until it ends
+to extract the information, which is available through this class&#39;
+getter methods. All the information is filled in as soon as it appears in
+the command output. When the process finishes, it cleans up the streams,
+sets percentage to 100% and gets the command&#39; s exit status. Then it
+sets :completed or :failed status according to the command&#39; s status.
+At the end it catches and displays any exceptions that can occur in the
+thread</p>
+          
+          
+
+          
+          <div class="method-source-code" id="fire-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 45</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">fire</span>
+  <span class="ruby-ivar">@processing_percentage</span> = <span class="ruby-value">0</span>
+  <span class="ruby-ivar">@processing_thread</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">th</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-constant">Open3</span>.<span class="ruby-identifier">popen2e</span>(<span class="ruby-ivar">@command</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">progin</span>, <span class="ruby-identifier">progout</span>, <span class="ruby-identifier">progthread</span><span class="ruby-operator">|</span>
+        <span class="ruby-ivar">@status</span> = <span class="ruby-value">:processing</span>
+        <span class="ruby-ivar">@parser_status</span> = <span class="ruby-value">:normal</span>
+        <span class="ruby-identifier">outputreader</span> = <span class="ruby-constant">OutputReader</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">progout</span>)
+        <span class="ruby-ivar">@rawoutput</span> = []
+        <span class="ruby-ivar">@input_meta_common</span> = {}
+        <span class="ruby-ivar">@input_meta_audio</span> = {}
+        <span class="ruby-ivar">@input_meta_video</span> = {}
+        <span class="ruby-ivar">@output_meta_common</span> = {}
+        <span class="ruby-ivar">@output_meta_audio</span> = {}
+        <span class="ruby-ivar">@output_meta_video</span> = {}
+        <span class="ruby-ivar">@processing_status</span> = {}
+        <span class="ruby-keyword">begin</span>
+          <span class="ruby-comment">#puts &quot;DEBUG: Processing next line...&quot;</span>
+          <span class="ruby-identifier">line</span> = <span class="ruby-identifier">outputreader</span>.<span class="ruby-identifier">gets</span>([<span class="ruby-string">&quot;\n&quot;</span>, <span class="ruby-string">&quot;\r&quot;</span>])
+          <span class="ruby-identifier">line</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">chomp!</span> <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">line</span>.<span class="ruby-identifier">nil?</span>
+          <span class="ruby-comment">#puts &quot;DEBUG: Line: &quot; + line.to_s</span>
+          <span class="ruby-comment">#puts &quot;DEBUG: Raw OutputReader buffer content: &quot;</span>
+          <span class="ruby-comment">#puts outputreader.get_raw_buffer</span>
+          <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">line</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">line</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&quot;EOF&quot;</span>
+            <span class="ruby-comment">#puts &quot;DEBUG: Adding line to rawoutput...&quot;</span>
+            <span class="ruby-ivar">@rawoutput</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">line</span>
+            <span class="ruby-comment"># Getting rid of unnecessary indentation spaces</span>
+            <span class="ruby-comment">#puts &quot;DEBUG: Removing unnecessary spaces...&quot;</span>
+            <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span>[<span class="ruby-regexp">/^[ ]+/</span>] <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>
+              <span class="ruby-identifier">line</span>[<span class="ruby-regexp">/^[ ]+/</span>] = <span class="ruby-string">&quot;&quot;</span>
+            <span class="ruby-keyword">end</span>
+            <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span>[<span class="ruby-regexp">/[ ]+/</span>] <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>
+              <span class="ruby-identifier">line</span>[<span class="ruby-regexp">/[ ]+/</span>] = <span class="ruby-string">&quot; &quot;</span>
+            <span class="ruby-keyword">end</span>
+            <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span>[<span class="ruby-regexp">/[ ]+$/</span>] <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>
+              <span class="ruby-identifier">line</span>[<span class="ruby-regexp">/[ ]+$/</span>] = <span class="ruby-string">&quot;&quot;</span>
+            <span class="ruby-keyword">end</span>
+            <span class="ruby-identifier">line</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp">/=[ ]+/</span>, <span class="ruby-string">&quot;=&quot;</span>)
+            <span class="ruby-comment"># Parsing</span>
+            <span class="ruby-comment">#puts &quot;DEBUG: Line after spaces removal: &quot; + line.to_s</span>
+            <span class="ruby-comment">#puts &quot;DEBUG: Parsing line...&quot;</span>
+            <span class="ruby-keyword">if</span> <span class="ruby-ivar">@conversion_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:audio</span>
+              <span class="ruby-keyword">if</span> <span class="ruby-ivar">@parser_status</span> <span class="ruby-operator">==</span> <span class="ruby-value">:meta</span>
+                <span class="ruby-comment">#puts &quot;DEBUG: Parser in metadata parsing mode&quot;</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">7</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Duration&quot;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">5</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Stream&quot;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;[&quot;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">5</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Output&quot;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">4</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Input&quot;</span> 
+                  <span class="ruby-ivar">@parser_status</span> = <span class="ruby-value">:normal</span>
+                <span class="ruby-keyword">else</span>
+                  <span class="ruby-comment">#puts &quot;DEBUG: Reading metadata line...&quot;</span>
+                  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@last_met_io</span> <span class="ruby-operator">==</span> <span class="ruby-value">:input</span>
+                    <span class="ruby-ivar">@input_meta_audio</span>[<span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;:&quot;</span>)[<span class="ruby-value">0</span>].<span class="ruby-identifier">downcase</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">-2</span>].<span class="ruby-identifier">to_sym</span>] = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;:&quot;</span>)[<span class="ruby-value">1</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                  <span class="ruby-keyword">elsif</span> <span class="ruby-ivar">@last_met_io</span> <span class="ruby-operator">==</span> <span class="ruby-value">:output</span>
+                    <span class="ruby-ivar">@output_meta_audio</span>[<span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;:&quot;</span>)[<span class="ruby-value">0</span>].<span class="ruby-identifier">downcase</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">-2</span>].<span class="ruby-identifier">to_sym</span>] = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;:&quot;</span>)[<span class="ruby-value">1</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                  <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">end</span>
+              <span class="ruby-keyword">end</span>
+              <span class="ruby-keyword">if</span> <span class="ruby-ivar">@parser_status</span> <span class="ruby-operator">==</span> <span class="ruby-value">:strmap</span>
+                <span class="ruby-comment">#puts &quot;DEBUG: Parser in stream mapping parsing mode&quot;</span>
+                <span class="ruby-comment">#puts &quot;DEBUG: Reading stream mapping information...&quot;</span>
+                <span class="ruby-ivar">@stream_mapping_audio</span> = <span class="ruby-identifier">line</span>[<span class="ruby-value">21</span><span class="ruby-operator">..</span><span class="ruby-value">-2</span>]
+                <span class="ruby-ivar">@parser_status</span> = <span class="ruby-value">:retnormal</span>
+              <span class="ruby-keyword">end</span>
+              <span class="ruby-keyword">if</span> <span class="ruby-ivar">@parser_status</span> <span class="ruby-operator">==</span> <span class="ruby-value">:normal</span>
+                <span class="ruby-comment">#puts &quot;DEBUG: Parser in normal mode&quot;</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">5</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;ffmpeg&quot;</span>
+                  <span class="ruby-comment">#puts &quot;DEBUG: Approached version line&quot;</span>
+                  <span class="ruby-ivar">@ff_versionline</span> = <span class="ruby-identifier">line</span>
+                <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">4</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;built&quot;</span>
+                  <span class="ruby-comment">#puts &quot;DEBUG: Approached build line&quot;</span>
+                  <span class="ruby-ivar">@ff_buildline</span> = <span class="ruby-identifier">line</span>
+                <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">4</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Input&quot;</span>
+                  <span class="ruby-comment">#puts &quot;DEBUG: Approached input declaration&quot;</span>
+                  <span class="ruby-ivar">@input_type</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">1</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                  <span class="ruby-ivar">@last_met_io</span> = <span class="ruby-value">:input</span>
+                <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">5</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Output&quot;</span>
+                  <span class="ruby-comment">#puts &quot;DEBUG: Approached output declaration&quot;</span>
+                  <span class="ruby-ivar">@detected_output_type</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">1</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                  <span class="ruby-ivar">@last_met_io</span> = <span class="ruby-value">:output</span>
+                <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">line</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Metadata:&quot;</span>
+                  <span class="ruby-comment">#puts &quot;DEBUG: Approached metadata start&quot;</span>
+                  <span class="ruby-ivar">@parser_status</span> = <span class="ruby-value">:meta</span>
+                <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">7</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Duration&quot;</span>
+                  <span class="ruby-comment">#puts &quot;DEBUG: Approached duration line&quot;</span>
+                  <span class="ruby-ivar">@input_duration</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">0</span>][<span class="ruby-value">10</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                  <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">1</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">5</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;start&quot;</span>
+                    <span class="ruby-comment">#puts &quot;DEBUG: Detected start variation of the line&quot;</span>
+                    <span class="ruby-ivar">@input_start</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">1</span>][<span class="ruby-value">6</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                    <span class="ruby-ivar">@input_bitrate</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">2</span>][<span class="ruby-value">10</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                  <span class="ruby-keyword">else</span>
+                    <span class="ruby-comment">#puts &quot;DEBUG: Detected only bitrate variation of the line&quot;</span>
+                    <span class="ruby-ivar">@input_bitrate</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">1</span>][<span class="ruby-value">10</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                  <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">line</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Stream mapping:&quot;</span>
+                  <span class="ruby-comment">#puts &quot;DEBUG: Approached stream mapping declaration&quot;</span>
+                  <span class="ruby-ivar">@parser_status</span> = <span class="ruby-value">:strmap</span>
+                <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">5</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Stream&quot;</span>
+                  <span class="ruby-comment">#puts &quot;DEBUG: Approached stream information line&quot;</span>
+                  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@last_met_io</span> <span class="ruby-operator">==</span> <span class="ruby-value">:input</span>
+                    <span class="ruby-ivar">@audio_input_format</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">0</span>][<span class="ruby-value">20</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                    <span class="ruby-ivar">@audio_input_freq</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">1</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                    <span class="ruby-ivar">@audio_input_channelmode</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">2</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                    <span class="ruby-ivar">@audio_input_format_type</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">3</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                    <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">4</span>] <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>
+                      <span class="ruby-ivar">@audio_input_bitrate2</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">4</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                    <span class="ruby-keyword">end</span>
+                  <span class="ruby-keyword">elsif</span> <span class="ruby-ivar">@last_met_io</span> <span class="ruby-operator">==</span> <span class="ruby-value">:output</span>
+                    <span class="ruby-ivar">@audio_output_format</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">0</span>][<span class="ruby-value">20</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                    <span class="ruby-ivar">@audio_output_freq</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">1</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                    <span class="ruby-ivar">@audio_output_channelmode</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">2</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                    <span class="ruby-ivar">@audio_output_format_type</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">3</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                    <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">4</span>] <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>
+                      <span class="ruby-ivar">@audio_output_bitrate2</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">4</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                    <span class="ruby-keyword">end</span>
+                  <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">3</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;size&quot;</span>
+                  <span class="ruby-comment">#puts &quot;DEBUG: Approached processing status line&quot;</span>
+                  <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot; &quot;</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">spl</span><span class="ruby-operator">|</span>
+                    <span class="ruby-ivar">@processing_status</span>[<span class="ruby-identifier">spl</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;=&quot;</span>)[<span class="ruby-value">0</span>].<span class="ruby-identifier">to_sym</span>] = <span class="ruby-identifier">spl</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;=&quot;</span>)[<span class="ruby-value">1</span>]
+                  <span class="ruby-keyword">end</span>
+                  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@processing_status</span>[<span class="ruby-value">:time</span>] <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@input_duration</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>
+                    <span class="ruby-ivar">@processing_percentage</span> = ((((<span class="ruby-constant">Time</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-ivar">@processing_status</span>[<span class="ruby-value">:time</span>])<span class="ruby-operator">-</span><span class="ruby-constant">Time</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-string">&quot;0:0&quot;</span>))<span class="ruby-operator">/</span>(<span class="ruby-constant">Time</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-ivar">@input_duration</span>)<span class="ruby-operator">-</span><span class="ruby-constant">Time</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-string">&quot;0:0&quot;</span>)))).<span class="ruby-identifier">round</span>(<span class="ruby-value">2</span>)<span class="ruby-operator">*</span><span class="ruby-value">100</span>).<span class="ruby-identifier">to_i</span> <span class="ruby-comment">#/ This is for jEdit syntax highlighting to fix</span>
+                  <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">end</span>
+              <span class="ruby-keyword">end</span>
+              <span class="ruby-keyword">if</span> <span class="ruby-ivar">@parser_status</span> <span class="ruby-operator">==</span> <span class="ruby-value">:retnormal</span>
+                <span class="ruby-comment">#puts &quot;DEBUG: Parser returning to normal mode&quot;</span>
+                <span class="ruby-ivar">@parser_status</span> = <span class="ruby-value">:normal</span>
+              <span class="ruby-keyword">end</span>
+            <span class="ruby-keyword">elsif</span> <span class="ruby-ivar">@conversion_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:video</span>
+              <span class="ruby-keyword">if</span> <span class="ruby-ivar">@parser_status</span> <span class="ruby-operator">==</span> <span class="ruby-value">:meta</span>
+                <span class="ruby-comment">#puts &quot;DEBUG: Parser in metadata parsing mode&quot;</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">7</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Duration&quot;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">5</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Stream&quot;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;[&quot;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">5</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Output&quot;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">4</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Input&quot;</span> 
+                  <span class="ruby-ivar">@parser_status</span> = <span class="ruby-value">:normal</span>
+                <span class="ruby-keyword">else</span>
+                  <span class="ruby-comment">#puts &quot;DEBUG: Reading metadata line...&quot;</span>
+                  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@last_met_io</span> <span class="ruby-operator">==</span> <span class="ruby-value">:input</span>
+                    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@last_stream_type</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">nil</span>
+                      <span class="ruby-ivar">@input_meta_common</span>[<span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;:&quot;</span>)[<span class="ruby-value">0</span>].<span class="ruby-identifier">downcase</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">-2</span>].<span class="ruby-identifier">to_sym</span>] = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;:&quot;</span>)[<span class="ruby-value">1</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                    <span class="ruby-keyword">elsif</span> <span class="ruby-ivar">@last_stream_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:audio</span>
+                      <span class="ruby-ivar">@input_meta_audio</span>[<span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;:&quot;</span>)[<span class="ruby-value">0</span>].<span class="ruby-identifier">downcase</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">-2</span>].<span class="ruby-identifier">to_sym</span>] = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;:&quot;</span>)[<span class="ruby-value">1</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                    <span class="ruby-keyword">elsif</span> <span class="ruby-ivar">@last_stream_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:video</span>
+                      <span class="ruby-ivar">@input_meta_video</span>[<span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;:&quot;</span>)[<span class="ruby-value">0</span>].<span class="ruby-identifier">downcase</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">-2</span>].<span class="ruby-identifier">to_sym</span>] = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;:&quot;</span>)[<span class="ruby-value">1</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                    <span class="ruby-keyword">end</span>
+                  <span class="ruby-keyword">elsif</span> <span class="ruby-ivar">@last_met_io</span> <span class="ruby-operator">==</span> <span class="ruby-value">:output</span>
+                    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@last_stream_type</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">nil</span>
+                      <span class="ruby-ivar">@output_meta_common</span>[<span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;:&quot;</span>)[<span class="ruby-value">0</span>].<span class="ruby-identifier">downcase</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">-2</span>].<span class="ruby-identifier">to_sym</span>] = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;:&quot;</span>)[<span class="ruby-value">1</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                    <span class="ruby-keyword">elsif</span> <span class="ruby-ivar">@last_stream_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:audio</span>
+                      <span class="ruby-ivar">@output_meta_audio</span>[<span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;:&quot;</span>)[<span class="ruby-value">0</span>].<span class="ruby-identifier">downcase</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">-2</span>].<span class="ruby-identifier">to_sym</span>] = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;:&quot;</span>)[<span class="ruby-value">1</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                    <span class="ruby-keyword">elsif</span> <span class="ruby-ivar">@last_stream_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:video</span>
+                      <span class="ruby-ivar">@output_meta_video</span>[<span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;:&quot;</span>)[<span class="ruby-value">0</span>].<span class="ruby-identifier">downcase</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">-2</span>].<span class="ruby-identifier">to_sym</span>] = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;:&quot;</span>)[<span class="ruby-value">1</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                    <span class="ruby-keyword">end</span>
+                  <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">end</span>
+              <span class="ruby-keyword">end</span>
+             <span class="ruby-keyword">if</span> <span class="ruby-ivar">@parser_status</span> <span class="ruby-operator">==</span> <span class="ruby-value">:strmap</span>
+                <span class="ruby-comment">#puts &quot;DEBUG: Parser in stream mapping parsing mode&quot;</span>
+                <span class="ruby-comment">#puts &quot;DEBUG: Reading stream mapping information...&quot;</span>
+                <span class="ruby-ivar">@stream_mapping_video</span> = <span class="ruby-identifier">line</span>[<span class="ruby-value">21</span><span class="ruby-operator">..</span><span class="ruby-value">-2</span>]
+                <span class="ruby-ivar">@parser_status</span> = <span class="ruby-value">:strmap2</span>
+              <span class="ruby-keyword">elsif</span> <span class="ruby-ivar">@parser_status</span> <span class="ruby-operator">==</span> <span class="ruby-value">:strmap2</span>
+                <span class="ruby-ivar">@stream_mapping_audio</span> = <span class="ruby-identifier">line</span>[<span class="ruby-value">21</span><span class="ruby-operator">..</span><span class="ruby-value">-2</span>]
+                <span class="ruby-ivar">@parser_status</span> = <span class="ruby-value">:retnormal</span>
+              <span class="ruby-keyword">end</span>
+              <span class="ruby-keyword">if</span> <span class="ruby-ivar">@parser_status</span> <span class="ruby-operator">==</span> <span class="ruby-value">:normal</span>
+                <span class="ruby-comment">#puts &quot;DEBUG: Parser in normal mode&quot;</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">5</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;ffmpeg&quot;</span>
+                  <span class="ruby-comment">#puts &quot;DEBUG: Approached version line&quot;</span>
+                  <span class="ruby-ivar">@ff_versionline</span> = <span class="ruby-identifier">line</span>
+                <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">4</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;built&quot;</span>
+                  <span class="ruby-comment">#puts &quot;DEBUG: Approached build line&quot;</span>
+                  <span class="ruby-ivar">@ff_buildline</span> = <span class="ruby-identifier">line</span>
+                <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">4</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Input&quot;</span>
+                  <span class="ruby-comment">#puts &quot;DEBUG: Approached input declaration&quot;</span>
+                  <span class="ruby-ivar">@input_type</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">1</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                  <span class="ruby-ivar">@last_met_io</span> = <span class="ruby-value">:input</span>
+                  <span class="ruby-ivar">@last_stream_type</span> = <span class="ruby-keyword">nil</span>
+                <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">5</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Output&quot;</span>
+                  <span class="ruby-comment">#puts &quot;DEBUG: Approached output declaration&quot;</span>
+                  <span class="ruby-ivar">@detected_output_type</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">1</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                  <span class="ruby-ivar">@last_met_io</span> = <span class="ruby-value">:output</span>
+                  <span class="ruby-ivar">@last_stream_type</span> = <span class="ruby-keyword">nil</span>
+                <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">line</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Metadata:&quot;</span>
+                  <span class="ruby-comment">#puts &quot;DEBUG: Approached metadata start&quot;</span>
+                  <span class="ruby-ivar">@parser_status</span> = <span class="ruby-value">:meta</span>
+                <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">7</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Duration&quot;</span>
+                  <span class="ruby-comment">#puts &quot;DEBUG: Approached duration line&quot;</span>
+                  <span class="ruby-ivar">@input_duration</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">0</span>][<span class="ruby-value">10</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                  <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">1</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">5</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;start&quot;</span>
+                    <span class="ruby-comment">#puts &quot;DEBUG: Detected start variation of the line&quot;</span>
+                    <span class="ruby-ivar">@input_start</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">1</span>][<span class="ruby-value">8</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                    <span class="ruby-ivar">@input_bitrate</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">2</span>][<span class="ruby-value">10</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                  <span class="ruby-keyword">else</span>
+                    <span class="ruby-comment">#puts &quot;DEBUG: Detected only bitrate variation of the line&quot;</span>
+                    <span class="ruby-ivar">@input_bitrate</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">1</span>][<span class="ruby-value">10</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                  <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">line</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Stream mapping:&quot;</span>
+                  <span class="ruby-comment">#puts &quot;DEBUG: Approached stream mapping declaration&quot;</span>
+                  <span class="ruby-ivar">@parser_status</span> = <span class="ruby-value">:strmap</span>
+                <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">5</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Stream&quot;</span>
+                  <span class="ruby-comment">#puts &quot;DEBUG: Approached stream information line&quot;</span>
+                  <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">13</span><span class="ruby-operator">..</span><span class="ruby-value">17</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Video&quot;</span>
+                    <span class="ruby-ivar">@last_stream_type</span> = <span class="ruby-value">:video</span>
+                  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">13</span><span class="ruby-operator">..</span><span class="ruby-value">17</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;Audio&quot;</span>
+                    <span class="ruby-ivar">@last_stream_type</span> = <span class="ruby-value">:audio</span>
+                  <span class="ruby-keyword">else</span>
+                    <span class="ruby-ivar">@last_stream_type</span> = <span class="ruby-keyword">nil</span>
+                  <span class="ruby-keyword">end</span>
+                  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@last_met_io</span> <span class="ruby-operator">==</span> <span class="ruby-value">:input</span>
+                    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@last_stream_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:video</span>
+                      <span class="ruby-ivar">@video_input_format</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">0</span>][<span class="ruby-value">20</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                      <span class="ruby-ivar">@video_input_colorspace</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">1</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                      <span class="ruby-ivar">@video_input_resolution</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">2</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                      <span class="ruby-ivar">@video_input_additional</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">3</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                    <span class="ruby-keyword">elsif</span> <span class="ruby-ivar">@last_stream_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:audio</span>
+                      <span class="ruby-ivar">@audio_input_format</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">0</span>][<span class="ruby-value">20</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                      <span class="ruby-ivar">@audio_input_freq</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">1</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                      <span class="ruby-ivar">@audio_input_channelmode</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">2</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                      <span class="ruby-ivar">@audio_input_format_type</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">3</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                      <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">4</span>] <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>
+                        <span class="ruby-ivar">@audio_input_bitrate2</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">4</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                      <span class="ruby-keyword">end</span>
+                    <span class="ruby-keyword">end</span>
+                  <span class="ruby-keyword">elsif</span> <span class="ruby-ivar">@last_met_io</span> <span class="ruby-operator">==</span> <span class="ruby-value">:output</span>
+                    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@last_stream_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:video</span>
+                      <span class="ruby-ivar">@video_output_format</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">0</span>][<span class="ruby-value">20</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                      <span class="ruby-ivar">@video_output_colorspace</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">1</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                      <span class="ruby-ivar">@video_output_resolution</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">2</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                      <span class="ruby-ivar">@video_output_additional</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">3</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                    <span class="ruby-keyword">elsif</span> <span class="ruby-ivar">@last_stream_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:audio</span>
+                      <span class="ruby-ivar">@audio_output_format</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">0</span>][<span class="ruby-value">20</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                      <span class="ruby-ivar">@audio_output_freq</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">1</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                      <span class="ruby-ivar">@audio_output_channelmode</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">2</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                      <span class="ruby-ivar">@audio_output_format_type</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">3</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                      <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">4</span>] <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>
+                        <span class="ruby-ivar">@audio_output_bitrate2</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>)[<span class="ruby-value">4</span>][<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+                      <span class="ruby-keyword">end</span>
+                    <span class="ruby-keyword">end</span>
+                  <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">4</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;frame&quot;</span>
+                  <span class="ruby-comment">#puts &quot;DEBUG: Approached processing status line&quot;</span>
+                  <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot; &quot;</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">spl</span><span class="ruby-operator">|</span>
+                    <span class="ruby-ivar">@processing_status</span>[<span class="ruby-identifier">spl</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;=&quot;</span>)[<span class="ruby-value">0</span>].<span class="ruby-identifier">to_sym</span>] = <span class="ruby-identifier">spl</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;=&quot;</span>)[<span class="ruby-value">1</span>]
+                  <span class="ruby-keyword">end</span>
+                  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@processing_status</span>[<span class="ruby-value">:time</span>] <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@input_duration</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>
+                    <span class="ruby-ivar">@processing_percentage</span> = ((((<span class="ruby-constant">Time</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-ivar">@processing_status</span>[<span class="ruby-value">:time</span>])<span class="ruby-operator">-</span><span class="ruby-constant">Time</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-string">&quot;0:0&quot;</span>))<span class="ruby-operator">/</span>(<span class="ruby-constant">Time</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-ivar">@input_duration</span>)<span class="ruby-operator">-</span><span class="ruby-constant">Time</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-string">&quot;0:0&quot;</span>)))).<span class="ruby-identifier">round</span>(<span class="ruby-value">2</span>)<span class="ruby-operator">*</span><span class="ruby-value">100</span>).<span class="ruby-identifier">to_i</span> <span class="ruby-comment">#/ This is for jEdit syntax highlighting to fix</span>
+                  <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">end</span>
+              <span class="ruby-keyword">end</span>
+              <span class="ruby-keyword">if</span> <span class="ruby-ivar">@parser_status</span> <span class="ruby-operator">==</span> <span class="ruby-value">:retnormal</span>
+                <span class="ruby-comment">#puts &quot;DEBUG: Parser returning to normal mode&quot;</span>
+                <span class="ruby-ivar">@parser_status</span> = <span class="ruby-value">:normal</span>
+              <span class="ruby-keyword">end</span>
+            <span class="ruby-keyword">end</span>
+          <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">end</span> <span class="ruby-keyword">while</span> <span class="ruby-identifier">line</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&quot;EOF&quot;</span>
+        <span class="ruby-comment">#puts &quot;DEBUG: After EOF, closing streams...&quot;</span>
+        <span class="ruby-identifier">progout</span>.<span class="ruby-identifier">close</span>
+        <span class="ruby-identifier">progin</span>.<span class="ruby-identifier">close</span>
+        <span class="ruby-identifier">progthread</span>.<span class="ruby-identifier">join</span>
+        <span class="ruby-identifier">progst</span> = <span class="ruby-identifier">progthread</span>.<span class="ruby-identifier">value</span>
+        <span class="ruby-ivar">@exit_status</span> = <span class="ruby-identifier">progst</span>.<span class="ruby-identifier">exitstatus</span>
+        <span class="ruby-comment">#puts &quot;Got output status: #{progst.exitstatus}&quot;</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">progst</span>.<span class="ruby-identifier">success?</span>
+          <span class="ruby-ivar">@status</span> = <span class="ruby-value">:completed</span>
+          <span class="ruby-ivar">@processing_percentage</span> = <span class="ruby-value">100</span>
+        <span class="ruby-keyword">else</span>
+          <span class="ruby-ivar">@status</span> = <span class="ruby-value">:failed</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-ivar">@status</span> <span class="ruby-operator">==</span> <span class="ruby-value">:failed</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">RFF</span><span class="ruby-operator">::</span><span class="ruby-constant">ProcessingFailure</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@exit_status</span>, <span class="ruby-string">&quot;Inspect the output as FFmpeg returned with status: &quot;</span>)
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Caught exception: &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Backtrace:&quot;</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">backtrace</span>
+      <span class="ruby-ivar">@status</span> = <span class="ruby-value">:failed</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- fire-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- fire-method -->
+
+    
+      <div id="method-i-format_processing_percentage" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">format_processing_percentage</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns percentage of process completion formatted for output</p>
+          
+          
+
+          
+          <div class="method-source-code" id="format_processing_percentage-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 609</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">format_processing_percentage</span>
+  <span class="ruby-ivar">@processing_percentage</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">?</span> <span class="ruby-string">&quot;0%&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-ivar">@processing_percentage</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;%&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- format_processing_percentage-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- format_processing_percentage-method -->
+
+    
+      <div id="method-i-full_output_path" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">full_output_path</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns full path to the output file</p>
+          
+          
+
+          
+          <div class="method-source-code" id="full_output_path-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 381</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">full_output_path</span>
+  <span class="ruby-node">&quot;#{@output_path}/#{@output_name}.#{@output_type.to_s}&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- full_output_path-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- full_output_path-method -->
+
+    
+      <div id="method-i-input" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">input</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns full input path</p>
+          
+          
+
+          
+          <div class="method-source-code" id="input-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 327</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">input</span>
+  <span class="ruby-ivar">@input</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- input-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- input-method -->
+
+    
+      <div id="method-i-input_bitrate" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">input_bitrate</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns input bitrate (from the duration line)</p>
+          
+          
+
+          
+          <div class="method-source-code" id="input_bitrate-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 489</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">input_bitrate</span>
+  <span class="ruby-ivar">@input_bitrate</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- input_bitrate-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- input_bitrate-method -->
+
+    
+      <div id="method-i-input_duration" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">input_duration</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns input duration</p>
+          
+          
+
+          
+          <div class="method-source-code" id="input_duration-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 477</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">input_duration</span>
+  <span class="ruby-ivar">@input_duration</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- input_duration-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- input_duration-method -->
+
+    
+      <div id="method-i-input_start" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">input_start</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns start point of the input</p>
+          
+          
+
+          
+          <div class="method-source-code" id="input_start-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 483</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">input_start</span>
+  <span class="ruby-ivar">@input_start</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- input_start-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- input_start-method -->
+
+    
+      <div id="method-i-input_type" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">input_type</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns input type detected by FFmpeg</p>
+          
+          
+
+          
+          <div class="method-source-code" id="input_type-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 471</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">input_type</span>
+  <span class="ruby-ivar">@input_type</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- input_type-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- input_type-method -->
+
+    
+      <div id="method-i-kill" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">kill</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method kills processing thread and sets status to :aborted</p>
+          
+          
+
+          
+          <div class="method-source-code" id="kill-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 621</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">kill</span>
+  <span class="ruby-ivar">@processing_thread</span>.<span class="ruby-identifier">kill</span>
+  <span class="ruby-ivar">@status</span> = <span class="ruby-value">:aborted</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- kill-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- kill-method -->
+
+    
+      <div id="method-i-output_name" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">output_name</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns full output name</p>
+          
+          
+
+          
+          <div class="method-source-code" id="output_name-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 345</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">output_name</span>
+  <span class="ruby-ivar">@output_name</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- output_name-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- output_name-method -->
+
+    
+      <div id="method-i-output_path" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">output_path</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns path where the output is (being) saved</p>
+          
+          
+
+          
+          <div class="method-source-code" id="output_path-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 351</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">output_path</span>
+  <span class="ruby-ivar">@output_path</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- output_path-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- output_path-method -->
+
+    
+      <div id="method-i-output_type" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">output_type</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns output type read from the filename</p>
+          
+          
+
+          
+          <div class="method-source-code" id="output_type-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 333</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">output_type</span>
+  <span class="ruby-ivar">@output_type</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- output_type-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- output_type-method -->
+
+    
+      <div id="method-i-parser_status" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">parser_status</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns current output parser status</p>
+          
+          
+
+          
+          <div class="method-source-code" id="parser_status-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 399</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">parser_status</span>
+  <span class="ruby-ivar">@parser_status</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- parser_status-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- parser_status-method -->
+
+    
+      <div id="method-i-processing_percentage" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">processing_percentage</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns percentage of process completion</p>
+          
+          
+
+          
+          <div class="method-source-code" id="processing_percentage-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 603</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">processing_percentage</span>
+  <span class="ruby-ivar">@processing_percentage</span> <span class="ruby-operator">||</span> <span class="ruby-value">0</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- processing_percentage-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- processing_percentage-method -->
+
+    
+      <div id="method-i-processing_status" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">processing_status</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns a hash which represents current processing status (eg.
+frames processed, time processed etc.) with keys being symbols representing
+each status value</p>
+          
+          
+
+          
+          <div class="method-source-code" id="processing_status-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 441</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">processing_status</span>
+  <span class="ruby-ivar">@processing_status</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- processing_status-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- processing_status-method -->
+
+    
+      <div id="method-i-quality" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">quality</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns used video quality</p>
+          
+          
+
+          
+          <div class="method-source-code" id="quality-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 357</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">quality</span>
+  <span class="ruby-ivar">@quality</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- quality-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- quality-method -->
+
+    
+      <div id="method-i-raw_command_output" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">raw_command_output</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns raw command output as an array of lines after getting
+rid of unneeded whitespaces</p>
+          
+          
+
+          
+          <div class="method-source-code" id="raw_command_output-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 387</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">raw_command_output</span>
+  <span class="ruby-ivar">@rawoutput</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- raw_command_output-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- raw_command_output-method -->
+
+    
+      <div id="method-i-status" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">status</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns current processing status (:pending, :processing,
+:completed, :failed, :aborted)</p>
+          
+          
+
+          
+          <div class="method-source-code" id="status-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 393</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">status</span>
+  <span class="ruby-ivar">@status</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- status-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- status-method -->
+
+    
+      <div id="method-i-video_input_additional" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">video_input_additional</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns additional information about video input as an array of
+values</p>
+          
+          
+
+          
+          <div class="method-source-code" id="video_input_additional-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 573</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">video_input_additional</span>
+  <span class="ruby-ivar">@video_input_additional</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- video_input_additional-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- video_input_additional-method -->
+
+    
+      <div id="method-i-video_input_colorspace" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">video_input_colorspace</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns color space of video input</p>
+          
+          
+
+          
+          <div class="method-source-code" id="video_input_colorspace-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 561</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">video_input_colorspace</span>
+  <span class="ruby-ivar">@video_input_colorspace</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- video_input_colorspace-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- video_input_colorspace-method -->
+
+    
+      <div id="method-i-video_input_format" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">video_input_format</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns format of video input</p>
+          
+          
+
+          
+          <div class="method-source-code" id="video_input_format-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 555</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">video_input_format</span>
+  <span class="ruby-ivar">@video_input_format</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- video_input_format-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- video_input_format-method -->
+
+    
+      <div id="method-i-video_input_metadata" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">video_input_metadata</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns metadata for video input stream as a hash with keys
+being symbols representing each metadata downcased name</p>
+          
+          
+
+          
+          <div class="method-source-code" id="video_input_metadata-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 417</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">video_input_metadata</span>
+  <span class="ruby-ivar">@input_meta_video</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- video_input_metadata-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- video_input_metadata-method -->
+
+    
+      <div id="method-i-video_input_resolution" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">video_input_resolution</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns resolution of video input</p>
+          
+          
+
+          
+          <div class="method-source-code" id="video_input_resolution-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 567</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">video_input_resolution</span>
+  <span class="ruby-ivar">@video_input_resolution</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- video_input_resolution-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- video_input_resolution-method -->
+
+    
+      <div id="method-i-video_output_additional" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">video_output_additional</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns additional information about video output as an array
+of values</p>
+          
+          
+
+          
+          <div class="method-source-code" id="video_output_additional-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 597</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">video_output_additional</span>
+  <span class="ruby-ivar">@video_output_additional</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- video_output_additional-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- video_output_additional-method -->
+
+    
+      <div id="method-i-video_output_colorspace" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">video_output_colorspace</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns color space of video output</p>
+          
+          
+
+          
+          <div class="method-source-code" id="video_output_colorspace-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 585</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">video_output_colorspace</span>
+  <span class="ruby-ivar">@video_output_colorspace</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- video_output_colorspace-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- video_output_colorspace-method -->
+
+    
+      <div id="method-i-video_output_format" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">video_output_format</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns format of video output</p>
+          
+          
+
+          
+          <div class="method-source-code" id="video_output_format-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 579</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">video_output_format</span>
+  <span class="ruby-ivar">@video_output_format</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- video_output_format-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- video_output_format-method -->
+
+    
+      <div id="method-i-video_output_metadata" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">video_output_metadata</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns metadata for video output stream as a hash with keys
+being symbols representing each metadata downcased name</p>
+          
+          
+
+          
+          <div class="method-source-code" id="video_output_metadata-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 435</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">video_output_metadata</span>
+  <span class="ruby-ivar">@output_meta_video</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- video_output_metadata-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- video_output_metadata-method -->
+
+    
+      <div id="method-i-video_output_resolution" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">video_output_resolution</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns resolution of video output</p>
+          
+          
+
+          
+          <div class="method-source-code" id="video_output_resolution-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 591</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">video_output_resolution</span>
+  <span class="ruby-ivar">@video_output_resolution</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- video_output_resolution-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- video_output_resolution-method -->
+
+    
+      <div id="method-i-video_stream_mapping" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">video_stream_mapping</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns video stream mapping information (input_format -&gt;
+output_format)</p>
+          
+          
+
+          
+          <div class="method-source-code" id="video_stream_mapping-source">
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 453</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">video_stream_mapping</span>
+  <span class="ruby-ivar">@stream_mapping_video</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- video_stream_mapping-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- video_stream_mapping-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

@@ -1,0 +1,103 @@
+= _rff_ - A Ruby gem for simple audio and video conversion for HTML5 using FFmpeg
+
+---
+
+== Introduction
+
+Are you tired of <b>outdated, not working gems</b> for dealing with <b>audio and video conversion</b>? Are you looking for something *simple* to <b>convert media files</b> in your Rails application to <b>HTML5 formats</b>? If so, then <b>_rff_ is just what you need!</b>
+
+The idea behind _rff_ is to be <b>simple media converting gem</b> based on *FFmpeg* providing basic functionality for <b>converting various media files</b> so they can be displayed in <b>HTML5 audio and video tags</b>, providing <b>command output</b> and also <b>parsing it to extract information about the status of conversion process</b> (eg. percentage done, length of processed file etc.).
+  
+---
+
+== Changelog
+
+* version 0.1 - Written the gem classes
+* version 0.2 - Got rid of the bug with mixing outputs in OutputReader' s buffer (was a static variable, now it is instance variable. Yeah, WHAT WAS I THINKING then?). Documented the code. Made small bugfixes.
+
+---
+
+== Installation
+
+As _rff_ is available on www.rubygems.org, all you have to do is to add:
+    
+  gem 'rff'
+  
+to your Gemfile. Alternatively you can install it via:
+    
+  gem install rff
+  
+command.
+
+---
+
+== Usage
+  
+The piece of code below converts a wav file to ogg, displaying the percentage of process completion along:
+    
+  proc = RFF::Processor.new("file.wav", :ogg)
+  proc.fire
+  while proc.processing_percentage < 100
+    print "Completed: " + proc.format_processing_percentage
+  end
+  
+The Processor class construction above implies that the ogg file is placed in the same directory that the wav file and the default options are used - they provide good quality of conversion. If you want to change this behaviour, please read the documentation. You can input every format supported by FFmpeg, output format must be one of HTML5 compliant media formats - mp3, ogg or wav for audio and mp4, ogv or webm for video. The Processor class also parses a wide variety of information about input and output files - read the documentation to learn how to get it.
+  
+The piece of code below converts a wav audio file to all formats needed by HTML5 to correctly handle media with audio tag and display the overall and partial completion percentages along:
+
+  ah = RFF::AudioHandler.new("file.wav")
+  ah.fire_all
+  while ah.processing_percentage == nil || ah.processing_percentage < 100
+    if ah.mp3_processor != nil
+      puts "MP3 status: " + ah.mp3_processor.format_processing_percentage
+    end
+    if ah.ogg_processor != nil
+      puts "OGG status: " + ah.ogg_processor.format_processing_percentage
+    end
+    if ah.wav_processor != nil
+      puts "WAV status: " + ah.wav_processor.format_processing_percentage
+    end
+    puts "Overall status: " + ah.format_processing_percentage
+    sleep(1)
+  end
+  
+The constructor of AudioHandler takes the same parameters that this of Processor, except of output type and video quality. If a given file is already in the HTML5 compliant format, the processor to this format is not created (as the original file can be used as a source then). To learn more, read the documentation.
+  
+The piece of code below converts a ogv video file to all formats needed by HTML5 to correctly handle media with video tag and display the overall and partial completion percentages along:
+
+  vh = RFF::VideoHandler.new("file.ogv")
+  vh.fire_all
+  while vh.processing_percentage == nil || vh.processing_percentage < 100
+    if vh.mp4_processor != nil
+      puts "MP4 status: " + vh.mp4_processor.format_processing_percentage
+    end
+    if vh.ogv_processor != nil
+      puts "OGV status: " + vh.ogv_processor.format_processing_percentage
+    end
+    if vh.webm_processor != nil
+      puts "WEBM status: " + vh.webm_processor.format_processing_percentage
+    end
+    puts "Overall status: " + vh.format_processing_percentage
+    sleep(1)
+  end
+
+The constructor of VideoHandler takes the same parameters that this of Processor, except of output type. If a given file is already in the HTML5 compliant format, the processor to this format is not created (as the original file can be used as a source then). To learn more, read the documentation.
+
+---
+
+== Gem status
+
+Version 0.2 with an important bugfix is out!
+
+---
+
+== Important information
+
+- The default arguments of the processor and handlers have been set to provide quite good quality of audio and video by default (unlike FFmpeg' s defaults). However, they are fully customizable by method options.
+- The handlers are now safe to use.
+- There are <b>automatic RSpec tests</b> in _spec_ subdirectory and also some <b>manual/custom tests </b> in _simpletests_ directory.
+- *Any* help with the known and not yet known issues is appreciated, <b>even simple feedback</b>.
+  
+---
+
+I hope you find rff useful and enjoyable to use!

@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class RFF::AudioHandler - RDoc Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/audio_handler.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-custom_args">#custom_args</a>
+    
+    <li ><a href="#method-i-fire_all">#fire_all</a>
+    
+    <li ><a href="#method-i-fire_sequential">#fire_sequential</a>
+    
+    <li ><a href="#method-i-format_processing_percentage">#format_processing_percentage</a>
+    
+    <li ><a href="#method-i-input">#input</a>
+    
+    <li ><a href="#method-i-killall">#killall</a>
+    
+    <li ><a href="#method-i-mp3_processor">#mp3_processor</a>
+    
+    <li ><a href="#method-i-ogg_processor">#ogg_processor</a>
+    
+    <li ><a href="#method-i-output_name">#output_name</a>
+    
+    <li ><a href="#method-i-output_path">#output_path</a>
+    
+    <li ><a href="#method-i-processing_percentage">#processing_percentage</a>
+    
+    <li ><a href="#method-i-wav_processor">#wav_processor</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../README_rdoc.html">README</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../RFF.html">RFF</a>
+  
+    <li><a href="../RFF/ArgumentError.html">RFF::ArgumentError</a>
+  
+    <li><a href="../RFF/AudioHandler.html">RFF::AudioHandler</a>
+  
+    <li><a href="../RFF/OutputReader.html">RFF::OutputReader</a>
+  
+    <li><a href="../RFF/ProcessingFailure.html">RFF::ProcessingFailure</a>
+  
+    <li><a href="../RFF/Processor.html">RFF::Processor</a>
+  
+    <li><a href="../RFF/VideoHandler.html">RFF::VideoHandler</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class RFF::AudioHandler</h1>
+
+  <div id="description" class="description">
+    
+<p>This class provides an “All audio to HTML5” conversion functionality. It
+takes every compatible with FFmpeg audio format and converts it to the
+three HTML5 audio formats - mp3, ogg and wav. If the input is already in
+one of these formats it is only converted to the two other formats, because
+it can be used as one of HTML5 sources.</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(input, output_path=nil, custom_args=nil, recommended_audio_quality=true)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This constructor initializes the class with the following arguments:</p>
+<ul><li>
+<p><em>input</em> <strong>(required)</strong> - the full path to the input
+file</p>
+</li><li>
+<p><em>output_path</em> - a path to place the output file in. Defaults to nil,
+which means that the input&#39; s directory path is used</p>
+</li><li>
+<p><em>custom_args</em> - passes custom arguments to FFmpeg. Defaults to nil,
+which means no custom arguments are given</p>
+</li><li>
+<p><em>recommended_audio_quality</em> - determines if recommended by FFmpeg
+community audio quality settings should be used. Defaults to true, which
+means audio conversion with good, recommended quality. Set to false if you
+are giving additional arguments that determine this quality.</p>
+</li></ul>
+
+<p>All of the arguments are passed on to underlying <a
+href="Processor.html">Processor</a> instances. This method also determines
+input type, initializes processing percentage and creates needed <a
+href="Processor.html">Processor</a> instances.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 20</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">input</span>, <span class="ruby-identifier">output_path</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">custom_args</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">recommended_audio_quality</span>=<span class="ruby-keyword">true</span>
+  <span class="ruby-ivar">@input</span> = <span class="ruby-identifier">input</span>
+  <span class="ruby-ivar">@input_type</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-ivar">@input</span>).<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;.&quot;</span>)[<span class="ruby-value">1</span>]
+  <span class="ruby-ivar">@output_path</span> = <span class="ruby-identifier">output_path</span>
+  <span class="ruby-ivar">@custom_args</span> = <span class="ruby-identifier">custom_args</span>
+  <span class="ruby-ivar">@processing_percentage</span> = <span class="ruby-value">0</span>
+  <span class="ruby-ivar">@processors</span> = []
+  <span class="ruby-identifier">types</span> = [<span class="ruby-value">:mp3</span>, <span class="ruby-value">:ogg</span>, <span class="ruby-value">:wav</span>]
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">types</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-ivar">@input_type</span>.<span class="ruby-identifier">to_sym</span>)
+    <span class="ruby-identifier">types</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-ivar">@input_type</span>.<span class="ruby-identifier">to_sym</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">types</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">type</span><span class="ruby-operator">|</span>
+    <span class="ruby-ivar">@processors</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">RFF</span><span class="ruby-operator">::</span><span class="ruby-constant">Processor</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@input</span>, <span class="ruby-identifier">type</span>, <span class="ruby-ivar">@output_path</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-ivar">@custom_args</span>, <span class="ruby-identifier">recommended_audio_quality</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-custom_args" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">custom_args</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns custom arguments passed to FFmpeg</p>
+          
+          
+
+          
+          <div class="method-source-code" id="custom_args-source">
+            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 168</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">custom_args</span>
+  <span class="ruby-ivar">@custom_args</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- custom_args-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- custom_args-method -->
+
+    
+      <div id="method-i-fire_all" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">fire_all</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method fires all the <a href="Processor.html">Processor</a> instances
+(conversion processes) in a separate thread at once. Then it counts the
+overall processing percentage from all the <a
+href="Processor.html">Processor</a> instances as the process goes and sets
+it to 100% on finish</p>
+          
+          
+
+          
+          <div class="method-source-code" id="fire_all-source">
+            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 38</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">fire_all</span>
+  <span class="ruby-ivar">@processing_thread</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">th</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-ivar">@processors</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">proc</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">proc</span>.<span class="ruby-identifier">fire</span>
+        <span class="ruby-comment">#sleep(5)</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">status</span> = <span class="ruby-value">:processing</span>
+      <span class="ruby-keyword">while</span> <span class="ruby-identifier">status</span> <span class="ruby-operator">!=</span> <span class="ruby-value">:done</span>
+        <span class="ruby-identifier">donecount</span> = <span class="ruby-value">0</span>
+        <span class="ruby-ivar">@processors</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">proc</span><span class="ruby-operator">|</span>
+          <span class="ruby-comment">#puts &quot;Process status:&quot; + proc.status.to_s</span>
+          <span class="ruby-keyword">if</span> <span class="ruby-identifier">proc</span>.<span class="ruby-identifier">status</span> <span class="ruby-operator">==</span> <span class="ruby-value">:completed</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">proc</span>.<span class="ruby-identifier">status</span> <span class="ruby-operator">==</span> <span class="ruby-value">:failed</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">proc</span>.<span class="ruby-identifier">status</span> <span class="ruby-operator">==</span> <span class="ruby-value">:aborted</span>
+            <span class="ruby-identifier">donecount</span> = <span class="ruby-identifier">donecount</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
+          <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-comment">#puts &quot;Done count: &quot; + donecount.to_s</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">donecount</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@processors</span>.<span class="ruby-identifier">count</span>
+          <span class="ruby-identifier">status</span> = <span class="ruby-value">:done</span>
+          <span class="ruby-keyword">break</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">processing_percentage</span> = <span class="ruby-value">0</span>
+        <span class="ruby-ivar">@processors</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">proc</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">processing_percentage</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">proc</span>.<span class="ruby-identifier">processing_percentage</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-ivar">@processing_percentage</span> = (<span class="ruby-identifier">processing_percentage</span>.<span class="ruby-identifier">to_f</span><span class="ruby-operator">/</span><span class="ruby-ivar">@processors</span>.<span class="ruby-identifier">count</span>).<span class="ruby-identifier">to_i</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-ivar">@processing_percentage</span> = <span class="ruby-value">100</span>
+    <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Caught exception: &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Backtrace:&quot;</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">backtrace</span>
+      <span class="ruby-ivar">@status</span> = <span class="ruby-value">:done</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- fire_all-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- fire_all-method -->
+
+    
+      <div id="method-i-fire_sequential" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">fire_sequential</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method fires all the <a href="Processor.html">Processor</a> instances
+(conversion processes) in a separate thread sequentially - next <a
+href="Processor.html">Processor</a> in the row is fired only after the <a
+href="Processor.html">Processor</a> before finishes. It also counts the
+overall processing percentage from all the <a
+href="Processor.html">Processor</a> instances as the process goes and sets
+it to 100% on finish</p>
+          
+          
+
+          
+          <div class="method-source-code" id="fire_sequential-source">
+            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 78</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">fire_sequential</span>
+  <span class="ruby-ivar">@processing_thread</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">th</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-identifier">i</span> = <span class="ruby-value">0</span>
+      <span class="ruby-ivar">@processors</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">proc</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">proc</span>.<span class="ruby-identifier">fire</span>
+        <span class="ruby-identifier">sleep</span>(<span class="ruby-value">1</span>)
+        <span class="ruby-keyword">while</span> <span class="ruby-identifier">proc</span>.<span class="ruby-identifier">status</span> <span class="ruby-operator">==</span> <span class="ruby-value">:processing</span>
+          <span class="ruby-keyword">if</span> <span class="ruby-identifier">proc</span>.<span class="ruby-identifier">processing_percentage</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>
+            <span class="ruby-ivar">@processing_percentage</span> = (<span class="ruby-identifier">i</span><span class="ruby-operator">*</span>(<span class="ruby-value">100</span><span class="ruby-operator">/</span><span class="ruby-ivar">@processors</span>.<span class="ruby-identifier">count</span>))<span class="ruby-operator">+</span>(<span class="ruby-identifier">proc</span>.<span class="ruby-identifier">processing_percentage</span>.<span class="ruby-identifier">to_f</span><span class="ruby-operator">/</span><span class="ruby-ivar">@processors</span>.<span class="ruby-identifier">count</span>).<span class="ruby-identifier">to_i</span>
+          <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">i</span> = <span class="ruby-identifier">i</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>
+        <span class="ruby-comment">#sleep(5)</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-ivar">@processing_percentage</span> = <span class="ruby-value">100</span>
+    <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Caught exception: &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Backtrace:&quot;</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">backtrace</span>
+      <span class="ruby-ivar">@status</span> = <span class="ruby-value">:done</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- fire_sequential-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- fire_sequential-method -->
+
+    
+      <div id="method-i-format_processing_percentage" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">format_processing_percentage</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns percentage of process completion formatted for output</p>
+          
+          
+
+          
+          <div class="method-source-code" id="format_processing_percentage-source">
+            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 180</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">format_processing_percentage</span>
+  <span class="ruby-ivar">@processing_percentage</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">?</span> <span class="ruby-string">&quot;0%&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-ivar">@processing_percentage</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;%&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- format_processing_percentage-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- format_processing_percentage-method -->
+
+    
+      <div id="method-i-input" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">input</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns full input path</p>
+          
+          
+
+          
+          <div class="method-source-code" id="input-source">
+            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 150</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">input</span>
+  <span class="ruby-ivar">@input</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- input-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- input-method -->
+
+    
+      <div id="method-i-killall" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">killall</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method kills all the processes in <a
+href="Processor.html">Processor</a> instances and its own processing thread</p>
+          
+          
+
+          
+          <div class="method-source-code" id="killall-source">
+            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 105</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">killall</span>
+  <span class="ruby-ivar">@processors</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">proc</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">proc</span>.<span class="ruby-identifier">kill</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@processing_thread</span>.<span class="ruby-identifier">kill</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- killall-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- killall-method -->
+
+    
+      <div id="method-i-mp3_processor" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">mp3_processor</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns the “to MP3” <a href="Processor.html">Processor</a>
+instance if it exists or nil otherwise</p>
+          
+          
+
+          
+          <div class="method-source-code" id="mp3_processor-source">
+            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 114</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">mp3_processor</span>
+  <span class="ruby-identifier">ret</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@processors</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">proc</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">proc</span>.<span class="ruby-identifier">output_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:mp3</span>
+      <span class="ruby-identifier">ret</span> = <span class="ruby-identifier">proc</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- mp3_processor-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- mp3_processor-method -->
+
+    
+      <div id="method-i-ogg_processor" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ogg_processor</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns the “to OGG” <a href="Processor.html">Processor</a>
+instance if it exists or nil otherwise</p>
+          
+          
+
+          
+          <div class="method-source-code" id="ogg_processor-source">
+            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 126</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ogg_processor</span>
+  <span class="ruby-identifier">ret</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@processors</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">proc</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">proc</span>.<span class="ruby-identifier">output_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:ogg</span>
+      <span class="ruby-identifier">ret</span> = <span class="ruby-identifier">proc</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- ogg_processor-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- ogg_processor-method -->
+
+    
+      <div id="method-i-output_name" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">output_name</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns full output file name</p>
+          
+          
+
+          
+          <div class="method-source-code" id="output_name-source">
+            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 156</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">output_name</span>
+  <span class="ruby-ivar">@output_name</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- output_name-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- output_name-method -->
+
+    
+      <div id="method-i-output_path" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">output_path</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns the path in which output file is saved</p>
+          
+          
+
+          
+          <div class="method-source-code" id="output_path-source">
+            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 162</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">output_path</span>
+  <span class="ruby-ivar">@output_path</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- output_path-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- output_path-method -->
+
+    
+      <div id="method-i-processing_percentage" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">processing_percentage</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns percentage of process completion</p>
+          
+          
+
+          
+          <div class="method-source-code" id="processing_percentage-source">
+            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 174</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">processing_percentage</span>
+  <span class="ruby-ivar">@processing_percentage</span> <span class="ruby-operator">||</span> <span class="ruby-value">0</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- processing_percentage-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- processing_percentage-method -->
+
+    
+      <div id="method-i-wav_processor" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">wav_processor</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>This method returns the “to WAV” <a href="Processor.html">Processor</a>
+instance if it exists or nil otherwise</p>
+          
+          
+
+          
+          <div class="method-source-code" id="wav_processor-source">
+            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 138</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">wav_processor</span>
+  <span class="ruby-identifier">ret</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@processors</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">proc</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">proc</span>.<span class="ruby-identifier">output_type</span> <span class="ruby-operator">==</span> <span class="ruby-value">:wav</span>
+      <span class="ruby-identifier">ret</span> = <span class="ruby-identifier">proc</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- wav_processor-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- wav_processor-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+
