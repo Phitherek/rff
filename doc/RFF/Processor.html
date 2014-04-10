@@ -251,7 +251,7 @@ and output files and current process status</p>
         
         <div class="method-heading">
           <span class="method-name">new</span><span
-            class="method-args">(input, output_type, output_path=nil, quality="5000k", custom_args=nil, recommended_audio_quality=true)</span>
+            class="method-args">(input, output_type, output_path=nil, quality="5000k", custom_args=nil, recommended_audio_quality=true, disable_subtitles_decoding=true)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -283,6 +283,10 @@ which means no custom arguments are given</p>
 community audio quality settings should be used. Defaults to true, which
 means audio conversion with good, recommended quality. Set to false if you
 are giving additional arguments that determine this quality.</p>
+</li><li>
+<p><em>disable_subtitles_decoding</em> - in some formats subtitle decoding
+causes problems. This option disables this feature. Defaults to true to
+bypass problems by default.</p>
 </li></ul>
 
 <p>This method also validates arguments, determines full output name,
@@ -293,8 +297,8 @@ initializes status (it is :pending at this point).</p>
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 20</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">input</span>, <span class="ruby-identifier">output_type</span>, <span class="ruby-identifier">output_path</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">quality</span>=<span class="ruby-string">&quot;5000k&quot;</span>, <span class="ruby-identifier">custom_args</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">recommended_audio_quality</span>=<span class="ruby-keyword">true</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 21</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">input</span>, <span class="ruby-identifier">output_type</span>, <span class="ruby-identifier">output_path</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">quality</span>=<span class="ruby-string">&quot;5000k&quot;</span>, <span class="ruby-identifier">custom_args</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">recommended_audio_quality</span>=<span class="ruby-keyword">true</span>, <span class="ruby-identifier">disable_subtitles_decoding</span>=<span class="ruby-keyword">true</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">input</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">input</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">output_type</span>.<span class="ruby-identifier">nil?</span>
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">RFF</span><span class="ruby-operator">::</span><span class="ruby-constant">ArgumentError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;Input and output type can not be empty nor nil!&quot;</span>)
   <span class="ruby-keyword">end</span>
@@ -308,10 +312,10 @@ initializes status (it is :pending at this point).</p>
   <span class="ruby-ivar">@quality</span> = <span class="ruby-identifier">quality</span>
   <span class="ruby-ivar">@custom_args</span> = <span class="ruby-identifier">custom_args</span>
   <span class="ruby-keyword">if</span> [<span class="ruby-value">:mp3</span>, <span class="ruby-value">:ogg</span>, <span class="ruby-value">:wav</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-ivar">@output_type</span>)
-    <span class="ruby-ivar">@command</span> = <span class="ruby-node">&quot;ffmpeg -y -i #{@input} -acodec #{@output_type == :mp3 ? &quot;libmp3lame&quot; : (@output_type == :ogg ? &quot;libvorbis&quot; : &quot;pcm_s16le&quot;)}#{recommended_audio_quality ? (@output_type == :mp3 ? &quot; -aq 2&quot; : (@output_type == :ogg ? &quot; -aq 4&quot; : &quot;&quot;)) : &quot;&quot;}#{@custom_args.nil? ? &quot;&quot; : &quot; #{@custom_args}&quot;} #{@output_path}/#{@output_name}.#{@output_type.to_s}&quot;</span>
+    <span class="ruby-ivar">@command</span> = <span class="ruby-string">&quot;ffmpeg -y -i &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;&quot;&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-node">&quot;#{@input}&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;&quot;&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-node">&quot; -acodec #{@output_type == :mp3 ? &quot;libmp3lame&quot; : (@output_type == :ogg ? &quot;libvorbis&quot; : &quot;pcm_s16le&quot;)}#{recommended_audio_quality ? (@output_type == :mp3 ? &quot; -aq 2&quot; : (@output_type == :ogg ? &quot; -aq 4&quot; : &quot;&quot;)) : &quot;&quot;}#{disable_subtitles_decoding ? &quot; -sn&quot; : &quot;&quot;}#{@custom_args.nil? ? &quot;&quot; : &quot; #{@custom_args}&quot;} &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;&quot;&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-node">&quot;#{@output_path}/#{@output_name}.#{@output_type.to_s}&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;&quot;&#39;</span>
     <span class="ruby-ivar">@conversion_type</span> = <span class="ruby-value">:audio</span>
   <span class="ruby-keyword">else</span>
-    <span class="ruby-ivar">@command</span> = <span class="ruby-node">&quot;ffmpeg -y -i #{@input} -acodec #{(@output_type == :webm || @output_type == :ogv) ? &quot;libvorbis&quot; : &quot;aac&quot;} -vcodec #{@output_type == :webm ? &quot;libvpx&quot; : (@output_type == :ogv ? &quot;libtheora&quot; : &quot;mpeg4&quot;)}#{@output_type == :mp4 ? &quot; -strict -2&quot; : &quot;&quot;}#{(!@quality.nil? &amp;&amp; !@quality.empty?) ? &quot; -b:v #{@quality}&quot; : &quot;&quot;}#{recommended_audio_quality ? (@output_type == :webm || @output_type == :ogv ? &quot; -aq 4&quot; : &quot; -b:a 240k&quot;) : &quot;&quot;}#{@custom_args.nil? ? &quot;&quot; : &quot; #{@custom_args}&quot;} #{@output_path}/#{@output_name}.#{@output_type.to_s}&quot;</span>
+    <span class="ruby-ivar">@command</span> = <span class="ruby-string">&quot;ffmpeg -y -i &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;&quot;&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-node">&quot;#{@input}&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;&quot;&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-node">&quot; -acodec #{(@output_type == :webm || @output_type == :ogv) ? &quot;libvorbis&quot; : &quot;aac&quot;} -vcodec #{@output_type == :webm ? &quot;libvpx&quot; : (@output_type == :ogv ? &quot;libtheora&quot; : &quot;mpeg4&quot;)}#{@output_type == :mp4 ? &quot; -strict -2&quot; : &quot;&quot;}#{(!@quality.nil? &amp;&amp; !@quality.empty?) ? &quot; -b:v #{@quality}&quot; : &quot;&quot;}#{recommended_audio_quality ? (@output_type == :webm || @output_type == :ogv ? &quot; -aq 4&quot; : &quot; -b:a 240k&quot;) : &quot;&quot;}#{disable_subtitles_decoding ? &quot; -sn&quot; : &quot;&quot;}#{@custom_args.nil? ? &quot;&quot; : &quot; #{@custom_args}&quot;} &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;&quot;&#39;</span> <span class="ruby-operator">+</span> <span class="ruby-node">&quot;#{@output_path}/#{@output_name}.#{@output_type.to_s}&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;&quot;&#39;</span>
     <span class="ruby-ivar">@conversion_type</span> = <span class="ruby-value">:video</span>
   <span class="ruby-keyword">end</span>
   <span class="ruby-ivar">@status</span> = <span class="ruby-value">:pending</span>
@@ -351,7 +355,7 @@ initializes status (it is :pending at this point).</p>
 
           
           <div class="method-source-code" id="audio_input_bitrate2-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 519</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 520</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">audio_input_bitrate2</span>
   <span class="ruby-ivar">@audio_input_bitrate2</span>
 <span class="ruby-keyword">end</span></pre>
@@ -384,7 +388,7 @@ initializes status (it is :pending at this point).</p>
 
           
           <div class="method-source-code" id="audio_input_channelmode-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 507</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 508</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">audio_input_channelmode</span>
   <span class="ruby-ivar">@audio_input_channelmode</span>
 <span class="ruby-keyword">end</span></pre>
@@ -417,7 +421,7 @@ initializes status (it is :pending at this point).</p>
 
           
           <div class="method-source-code" id="audio_input_format-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 495</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 496</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">audio_input_format</span>
   <span class="ruby-ivar">@audio_input_format</span>
 <span class="ruby-keyword">end</span></pre>
@@ -450,7 +454,7 @@ initializes status (it is :pending at this point).</p>
 
           
           <div class="method-source-code" id="audio_input_format_type-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 513</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 514</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">audio_input_format_type</span>
   <span class="ruby-ivar">@audio_input_format_type</span>
 <span class="ruby-keyword">end</span></pre>
@@ -483,7 +487,7 @@ initializes status (it is :pending at this point).</p>
 
           
           <div class="method-source-code" id="audio_input_frequency-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 501</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 502</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">audio_input_frequency</span>
   <span class="ruby-ivar">@audio_input_freq</span>
 <span class="ruby-keyword">end</span></pre>
@@ -517,7 +521,7 @@ being symbols representing each metadata downcased name</p>
 
           
           <div class="method-source-code" id="audio_input_metadata-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 411</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 412</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">audio_input_metadata</span>
   <span class="ruby-ivar">@input_meta_audio</span>
 <span class="ruby-keyword">end</span></pre>
@@ -550,7 +554,7 @@ being symbols representing each metadata downcased name</p>
 
           
           <div class="method-source-code" id="audio_output_bitrate2-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 549</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 550</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">audio_output_bitrate2</span>
   <span class="ruby-ivar">@audio_output_bitrate2</span>
 <span class="ruby-keyword">end</span></pre>
@@ -583,7 +587,7 @@ being symbols representing each metadata downcased name</p>
 
           
           <div class="method-source-code" id="audio_output_channelmode-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 537</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 538</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">audio_output_channelmode</span>
   <span class="ruby-ivar">@audio_output_channelmode</span>
 <span class="ruby-keyword">end</span></pre>
@@ -616,7 +620,7 @@ being symbols representing each metadata downcased name</p>
 
           
           <div class="method-source-code" id="audio_output_format-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 525</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 526</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">audio_output_format</span>
   <span class="ruby-ivar">@audio_output_format</span>
 <span class="ruby-keyword">end</span></pre>
@@ -649,7 +653,7 @@ being symbols representing each metadata downcased name</p>
 
           
           <div class="method-source-code" id="audio_output_format_type-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 543</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 544</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">audio_output_format_type</span>
   <span class="ruby-ivar">@audio_output_format_type</span>
 <span class="ruby-keyword">end</span></pre>
@@ -682,7 +686,7 @@ being symbols representing each metadata downcased name</p>
 
           
           <div class="method-source-code" id="audio_output_frequency-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 531</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 532</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">audio_output_frequency</span>
   <span class="ruby-ivar">@audio_output_freq</span>
 <span class="ruby-keyword">end</span></pre>
@@ -716,7 +720,7 @@ being symbols representing each metadata downcased name</p>
 
           
           <div class="method-source-code" id="audio_output_metadata-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 429</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 430</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">audio_output_metadata</span>
   <span class="ruby-ivar">@output_meta_audio</span>
 <span class="ruby-keyword">end</span></pre>
@@ -750,7 +754,7 @@ output_format)</p>
 
           
           <div class="method-source-code" id="audio_stream_mapping-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 447</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 448</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">audio_stream_mapping</span>
   <span class="ruby-ivar">@stream_mapping_audio</span>
 <span class="ruby-keyword">end</span></pre>
@@ -783,7 +787,7 @@ output_format)</p>
 
           
           <div class="method-source-code" id="command-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 363</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 364</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">command</span>
   <span class="ruby-ivar">@command</span>
 <span class="ruby-keyword">end</span></pre>
@@ -816,7 +820,7 @@ output_format)</p>
 
           
           <div class="method-source-code" id="command_exit_status-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 615</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 616</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">command_exit_status</span>
   <span class="ruby-ivar">@exit_status</span>
 <span class="ruby-keyword">end</span></pre>
@@ -850,7 +854,7 @@ being symbols representing each metadata downcased name</p>
 
           
           <div class="method-source-code" id="common_input_metadata-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 405</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 406</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">common_input_metadata</span>
   <span class="ruby-ivar">@input_meta_common</span>
 <span class="ruby-keyword">end</span></pre>
@@ -884,7 +888,7 @@ being symbols representing each metadata downcased name</p>
 
           
           <div class="method-source-code" id="common_output_metadata-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 423</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 424</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">common_output_metadata</span>
   <span class="ruby-ivar">@output_meta_common</span>
 <span class="ruby-keyword">end</span></pre>
@@ -917,7 +921,7 @@ being symbols representing each metadata downcased name</p>
 
           
           <div class="method-source-code" id="conversion_type-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 375</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 376</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">conversion_type</span>
   <span class="ruby-ivar">@conversion_type</span>
 <span class="ruby-keyword">end</span></pre>
@@ -950,7 +954,7 @@ being symbols representing each metadata downcased name</p>
 
           
           <div class="method-source-code" id="custom_args-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 369</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 370</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">custom_args</span>
   <span class="ruby-ivar">@custom_args</span>
 <span class="ruby-keyword">end</span></pre>
@@ -983,7 +987,7 @@ being symbols representing each metadata downcased name</p>
 
           
           <div class="method-source-code" id="detected_output_type-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 339</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 340</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">detected_output_type</span>
   <span class="ruby-ivar">@detected_output_type</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1016,7 +1020,7 @@ being symbols representing each metadata downcased name</p>
 
           
           <div class="method-source-code" id="ffmpeg_build_line-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 465</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 466</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">ffmpeg_build_line</span>
   <span class="ruby-ivar">@ff_buildline</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1049,7 +1053,7 @@ being symbols representing each metadata downcased name</p>
 
           
           <div class="method-source-code" id="ffmpeg_version_line-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 459</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 460</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">ffmpeg_version_line</span>
   <span class="ruby-ivar">@ff_versionline</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1094,7 +1098,7 @@ thread</p>
 
           
           <div class="method-source-code" id="fire-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 45</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 46</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">fire</span>
   <span class="ruby-ivar">@processing_percentage</span> = <span class="ruby-value">0</span>
   <span class="ruby-ivar">@processing_thread</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">th</span><span class="ruby-operator">|</span>
@@ -1403,7 +1407,7 @@ thread</p>
 
           
           <div class="method-source-code" id="format_processing_percentage-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 609</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 610</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">format_processing_percentage</span>
   <span class="ruby-ivar">@processing_percentage</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">?</span> <span class="ruby-string">&quot;0%&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-ivar">@processing_percentage</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;%&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1436,7 +1440,7 @@ thread</p>
 
           
           <div class="method-source-code" id="full_output_path-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 381</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 382</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">full_output_path</span>
   <span class="ruby-node">&quot;#{@output_path}/#{@output_name}.#{@output_type.to_s}&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1469,7 +1473,7 @@ thread</p>
 
           
           <div class="method-source-code" id="input-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 327</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 328</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">input</span>
   <span class="ruby-ivar">@input</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1502,7 +1506,7 @@ thread</p>
 
           
           <div class="method-source-code" id="input_bitrate-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 489</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 490</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">input_bitrate</span>
   <span class="ruby-ivar">@input_bitrate</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1535,7 +1539,7 @@ thread</p>
 
           
           <div class="method-source-code" id="input_duration-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 477</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 478</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">input_duration</span>
   <span class="ruby-ivar">@input_duration</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1568,7 +1572,7 @@ thread</p>
 
           
           <div class="method-source-code" id="input_start-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 483</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 484</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">input_start</span>
   <span class="ruby-ivar">@input_start</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1601,7 +1605,7 @@ thread</p>
 
           
           <div class="method-source-code" id="input_type-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 471</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 472</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">input_type</span>
   <span class="ruby-ivar">@input_type</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1634,7 +1638,7 @@ thread</p>
 
           
           <div class="method-source-code" id="kill-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 621</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 622</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">kill</span>
   <span class="ruby-ivar">@processing_thread</span>.<span class="ruby-identifier">kill</span>
   <span class="ruby-ivar">@status</span> = <span class="ruby-value">:aborted</span>
@@ -1668,7 +1672,7 @@ thread</p>
 
           
           <div class="method-source-code" id="output_name-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 345</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 346</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">output_name</span>
   <span class="ruby-ivar">@output_name</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1701,7 +1705,7 @@ thread</p>
 
           
           <div class="method-source-code" id="output_path-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 351</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 352</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">output_path</span>
   <span class="ruby-ivar">@output_path</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1734,7 +1738,7 @@ thread</p>
 
           
           <div class="method-source-code" id="output_type-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 333</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 334</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">output_type</span>
   <span class="ruby-ivar">@output_type</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1767,7 +1771,7 @@ thread</p>
 
           
           <div class="method-source-code" id="parser_status-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 399</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 400</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">parser_status</span>
   <span class="ruby-ivar">@parser_status</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1800,7 +1804,7 @@ thread</p>
 
           
           <div class="method-source-code" id="processing_percentage-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 603</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 604</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">processing_percentage</span>
   <span class="ruby-ivar">@processing_percentage</span> <span class="ruby-operator">||</span> <span class="ruby-value">0</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1835,7 +1839,7 @@ each status value</p>
 
           
           <div class="method-source-code" id="processing_status-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 441</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 442</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">processing_status</span>
   <span class="ruby-ivar">@processing_status</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1868,7 +1872,7 @@ each status value</p>
 
           
           <div class="method-source-code" id="quality-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 357</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 358</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">quality</span>
   <span class="ruby-ivar">@quality</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1902,7 +1906,7 @@ rid of unneeded whitespaces</p>
 
           
           <div class="method-source-code" id="raw_command_output-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 387</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 388</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">raw_command_output</span>
   <span class="ruby-ivar">@rawoutput</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1936,7 +1940,7 @@ rid of unneeded whitespaces</p>
 
           
           <div class="method-source-code" id="status-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 393</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 394</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">status</span>
   <span class="ruby-ivar">@status</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1970,7 +1974,7 @@ values</p>
 
           
           <div class="method-source-code" id="video_input_additional-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 573</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 574</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">video_input_additional</span>
   <span class="ruby-ivar">@video_input_additional</span>
 <span class="ruby-keyword">end</span></pre>
@@ -2003,7 +2007,7 @@ values</p>
 
           
           <div class="method-source-code" id="video_input_colorspace-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 561</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 562</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">video_input_colorspace</span>
   <span class="ruby-ivar">@video_input_colorspace</span>
 <span class="ruby-keyword">end</span></pre>
@@ -2036,7 +2040,7 @@ values</p>
 
           
           <div class="method-source-code" id="video_input_format-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 555</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 556</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">video_input_format</span>
   <span class="ruby-ivar">@video_input_format</span>
 <span class="ruby-keyword">end</span></pre>
@@ -2070,7 +2074,7 @@ being symbols representing each metadata downcased name</p>
 
           
           <div class="method-source-code" id="video_input_metadata-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 417</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 418</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">video_input_metadata</span>
   <span class="ruby-ivar">@input_meta_video</span>
 <span class="ruby-keyword">end</span></pre>
@@ -2103,7 +2107,7 @@ being symbols representing each metadata downcased name</p>
 
           
           <div class="method-source-code" id="video_input_resolution-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 567</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 568</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">video_input_resolution</span>
   <span class="ruby-ivar">@video_input_resolution</span>
 <span class="ruby-keyword">end</span></pre>
@@ -2137,7 +2141,7 @@ of values</p>
 
           
           <div class="method-source-code" id="video_output_additional-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 597</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 598</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">video_output_additional</span>
   <span class="ruby-ivar">@video_output_additional</span>
 <span class="ruby-keyword">end</span></pre>
@@ -2170,7 +2174,7 @@ of values</p>
 
           
           <div class="method-source-code" id="video_output_colorspace-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 585</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 586</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">video_output_colorspace</span>
   <span class="ruby-ivar">@video_output_colorspace</span>
 <span class="ruby-keyword">end</span></pre>
@@ -2203,7 +2207,7 @@ of values</p>
 
           
           <div class="method-source-code" id="video_output_format-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 579</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 580</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">video_output_format</span>
   <span class="ruby-ivar">@video_output_format</span>
 <span class="ruby-keyword">end</span></pre>
@@ -2237,7 +2241,7 @@ being symbols representing each metadata downcased name</p>
 
           
           <div class="method-source-code" id="video_output_metadata-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 435</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 436</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">video_output_metadata</span>
   <span class="ruby-ivar">@output_meta_video</span>
 <span class="ruby-keyword">end</span></pre>
@@ -2270,7 +2274,7 @@ being symbols representing each metadata downcased name</p>
 
           
           <div class="method-source-code" id="video_output_resolution-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 591</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 592</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">video_output_resolution</span>
   <span class="ruby-ivar">@video_output_resolution</span>
 <span class="ruby-keyword">end</span></pre>
@@ -2304,7 +2308,7 @@ output_format)</p>
 
           
           <div class="method-source-code" id="video_stream_mapping-source">
-            <pre><span class="ruby-comment"># File lib/processor.rb, line 453</span>
+            <pre><span class="ruby-comment"># File lib/processor.rb, line 454</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">video_stream_mapping</span>
   <span class="ruby-ivar">@stream_mapping_video</span>
 <span class="ruby-keyword">end</span></pre>

@@ -42,17 +42,17 @@ describe RFF::Processor do
   
   it 'should generate correct FFmpeg commands' do
     @processor = RFF::Processor.new("costam", :mp3)
-    @processor.command.should eq("ffmpeg -y -i costam -acodec libmp3lame -aq 2 ./costam.mp3")
+    @processor.command.should eq("ffmpeg -y -i \"costam\" -acodec libmp3lame -aq 2 -sn \"./costam.mp3\"")
     @processor = RFF::Processor.new("costam.ext", :ogg, nil, "5000k", "-someoption value")
-    @processor.command.should eq("ffmpeg -y -i costam.ext -acodec libvorbis -aq 4 -someoption value ./costam.ogg")
+    @processor.command.should eq("ffmpeg -y -i \"costam.ext\" -acodec libvorbis -aq 4 -sn -someoption value \"./costam.ogg\"")
     @processor = RFF::Processor.new("/some/path/costam.ext", :wav)
-    @processor.command.should eq("ffmpeg -y -i /some/path/costam.ext -acodec pcm_s16le /some/path/costam.wav")
+    @processor.command.should eq("ffmpeg -y -i \"/some/path/costam.ext\" -acodec pcm_s16le -sn \"/some/path/costam.wav\"")
     @processor = RFF::Processor.new("/some/path/costam.ext", :webm, "/some/other/path")
-    @processor.command.should eq("ffmpeg -y -i /some/path/costam.ext -acodec libvorbis -vcodec libvpx -b:v 5000k -aq 4 /some/other/path/costam.webm")
+    @processor.command.should eq("ffmpeg -y -i \"/some/path/costam.ext\" -acodec libvorbis -vcodec libvpx -b:v 5000k -aq 4 -sn \"/some/other/path/costam.webm\"")
     @processor = RFF::Processor.new("/some/path/costam.ext", :ogv, "/some/other/path", "4000k", "-someoption value")
-    @processor.command.should eq("ffmpeg -y -i /some/path/costam.ext -acodec libvorbis -vcodec libtheora -b:v 4000k -aq 4 -someoption value /some/other/path/costam.ogv")
+    @processor.command.should eq("ffmpeg -y -i \"/some/path/costam.ext\" -acodec libvorbis -vcodec libtheora -b:v 4000k -aq 4 -sn -someoption value \"/some/other/path/costam.ogv\"")
     @processor = RFF::Processor.new("/some/path/costam.ext", :mp4)
-    @processor.command.should eq("ffmpeg -y -i /some/path/costam.ext -acodec aac -vcodec mpeg4 -strict -2 -b:v 5000k -b:a 240k /some/path/costam.mp4")
+    @processor.command.should eq("ffmpeg -y -i \"/some/path/costam.ext\" -acodec aac -vcodec mpeg4 -strict -2 -b:v 5000k -b:a 240k -sn \"/some/path/costam.mp4\"")
   end
   
   it 'should generate correct full output path' do

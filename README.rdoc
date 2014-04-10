@@ -14,6 +14,7 @@ The idea behind _rff_ is to be <b>simple media converting gem</b> based on *FFmp
 
 * version 0.1 - Written the gem classes
 * version 0.2 - Got rid of the bug with mixing outputs in OutputReader' s buffer (was a static variable, now it is instance variable. Yeah, WHAT WAS I THINKING then?). Documented the code. Made small bugfixes.
+* version 0.2.1 - Wrapped the paths into "" to allow whitespaces and other strange characters. Added the -sn option to the FFmpeg command and disable_subtitles_decoding parameter to Processor and handlers to bypass subtitle decoding errors with some format combinations.
 
 ---
 

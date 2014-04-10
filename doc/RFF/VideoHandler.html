@@ -177,7 +177,7 @@ it can be used as one of HTML5 sources.</p>
         
         <div class="method-heading">
           <span class="method-name">new</span><span
-            class="method-args">(input, output_path=nil, quality="5000k", custom_args=nil, recommended_audio_quality=true)</span>
+            class="method-args">(input, output_path=nil, quality="5000k", custom_args=nil, recommended_audio_quality=true, disable_subtitles_decoding=true)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -205,6 +205,10 @@ which means no custom arguments are given</p>
 community audio quality settings should be used. Defaults to true, which
 means audio conversion with good, recommended quality. Set to false if you
 are giving additional arguments that determine this quality.</p>
+</li><li>
+<p><em>disable_subtitles_decoding</em> - in some formats subtitle decoding
+causes problems. This option disables this feature. Defaults to true to
+bypass problems by default.</p>
 </li></ul>
 
 <p>All of the arguments are passed on to underlying <a
@@ -216,8 +220,8 @@ href="Processor.html">Processor</a> instances.</p>
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/video_handler.rb, line 17</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">input</span>, <span class="ruby-identifier">output_path</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">quality</span>=<span class="ruby-string">&quot;5000k&quot;</span>, <span class="ruby-identifier">custom_args</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">recommended_audio_quality</span>=<span class="ruby-keyword">true</span>
+            <pre><span class="ruby-comment"># File lib/video_handler.rb, line 18</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">input</span>, <span class="ruby-identifier">output_path</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">quality</span>=<span class="ruby-string">&quot;5000k&quot;</span>, <span class="ruby-identifier">custom_args</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">recommended_audio_quality</span>=<span class="ruby-keyword">true</span>, <span class="ruby-identifier">disable_subtitles_decoding</span>=<span class="ruby-keyword">true</span>
   <span class="ruby-ivar">@input</span> = <span class="ruby-identifier">input</span>
   <span class="ruby-ivar">@input_type</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-ivar">@input</span>).<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;.&quot;</span>)[<span class="ruby-value">1</span>]
   <span class="ruby-ivar">@output_path</span> = <span class="ruby-identifier">output_path</span>
@@ -230,7 +234,7 @@ href="Processor.html">Processor</a> instances.</p>
     <span class="ruby-identifier">types</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-ivar">@input_type</span>.<span class="ruby-identifier">to_sym</span>)
   <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">types</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">type</span><span class="ruby-operator">|</span>
-    <span class="ruby-ivar">@processors</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">RFF</span><span class="ruby-operator">::</span><span class="ruby-constant">Processor</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@input</span>, <span class="ruby-identifier">type</span>, <span class="ruby-ivar">@output_path</span>, <span class="ruby-ivar">@quality</span>, <span class="ruby-ivar">@custom_args</span>, <span class="ruby-identifier">recommended_audio_quality</span>)
+    <span class="ruby-ivar">@processors</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">RFF</span><span class="ruby-operator">::</span><span class="ruby-constant">Processor</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@input</span>, <span class="ruby-identifier">type</span>, <span class="ruby-ivar">@output_path</span>, <span class="ruby-ivar">@quality</span>, <span class="ruby-ivar">@custom_args</span>, <span class="ruby-identifier">recommended_audio_quality</span>, <span class="ruby-identifier">disable_subtitles_decoding</span>)
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- new-source -->
@@ -268,7 +272,7 @@ href="Processor.html">Processor</a> instances.</p>
 
           
           <div class="method-source-code" id="custom_args-source">
-            <pre><span class="ruby-comment"># File lib/video_handler.rb, line 171</span>
+            <pre><span class="ruby-comment"># File lib/video_handler.rb, line 172</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">custom_args</span>
   <span class="ruby-ivar">@custom_args</span>
 <span class="ruby-keyword">end</span></pre>
@@ -305,7 +309,7 @@ it to 100% on finish</p>
 
           
           <div class="method-source-code" id="fire_all-source">
-            <pre><span class="ruby-comment"># File lib/video_handler.rb, line 36</span>
+            <pre><span class="ruby-comment"># File lib/video_handler.rb, line 37</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">fire_all</span>
   <span class="ruby-ivar">@processing_thread</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">th</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">begin</span>
@@ -377,7 +381,7 @@ it to 100% on finish</p>
 
           
           <div class="method-source-code" id="fire_sequential-source">
-            <pre><span class="ruby-comment"># File lib/video_handler.rb, line 75</span>
+            <pre><span class="ruby-comment"># File lib/video_handler.rb, line 76</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">fire_sequential</span>
   <span class="ruby-ivar">@processing_thread</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">th</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">begin</span>
@@ -431,7 +435,7 @@ it to 100% on finish</p>
 
           
           <div class="method-source-code" id="format_processing_percentage-source">
-            <pre><span class="ruby-comment"># File lib/video_handler.rb, line 183</span>
+            <pre><span class="ruby-comment"># File lib/video_handler.rb, line 184</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">format_processing_percentage</span>
   <span class="ruby-ivar">@processing_percentage</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">?</span> <span class="ruby-string">&quot;0%&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-ivar">@processing_percentage</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;%&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -464,7 +468,7 @@ it to 100% on finish</p>
 
           
           <div class="method-source-code" id="input-source">
-            <pre><span class="ruby-comment"># File lib/video_handler.rb, line 147</span>
+            <pre><span class="ruby-comment"># File lib/video_handler.rb, line 148</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">input</span>
   <span class="ruby-ivar">@input</span>
 <span class="ruby-keyword">end</span></pre>
@@ -498,7 +502,7 @@ href="Processor.html">Processor</a> instances and its own processing thread</p>
 
           
           <div class="method-source-code" id="killall-source">
-            <pre><span class="ruby-comment"># File lib/video_handler.rb, line 102</span>
+            <pre><span class="ruby-comment"># File lib/video_handler.rb, line 103</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">killall</span>
   <span class="ruby-ivar">@processors</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">proc</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">proc</span>.<span class="ruby-identifier">kill</span>
@@ -535,7 +539,7 @@ instance if it exists or nil otherwise</p>
 
           
           <div class="method-source-code" id="mp4_processor-source">
-            <pre><span class="ruby-comment"># File lib/video_handler.rb, line 111</span>
+            <pre><span class="ruby-comment"># File lib/video_handler.rb, line 112</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">mp4_processor</span>
   <span class="ruby-identifier">ret</span> = <span class="ruby-keyword">nil</span>
   <span class="ruby-ivar">@processors</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">proc</span><span class="ruby-operator">|</span>
@@ -575,7 +579,7 @@ instance if it exists or nil otherwise</p>
 
           
           <div class="method-source-code" id="ogv_processor-source">
-            <pre><span class="ruby-comment"># File lib/video_handler.rb, line 123</span>
+            <pre><span class="ruby-comment"># File lib/video_handler.rb, line 124</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">ogv_processor</span>
   <span class="ruby-identifier">ret</span> = <span class="ruby-keyword">nil</span>
   <span class="ruby-ivar">@processors</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">proc</span><span class="ruby-operator">|</span>
@@ -614,7 +618,7 @@ instance if it exists or nil otherwise</p>
 
           
           <div class="method-source-code" id="output_name-source">
-            <pre><span class="ruby-comment"># File lib/video_handler.rb, line 153</span>
+            <pre><span class="ruby-comment"># File lib/video_handler.rb, line 154</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">output_name</span>
   <span class="ruby-ivar">@output_name</span>
 <span class="ruby-keyword">end</span></pre>
@@ -647,7 +651,7 @@ instance if it exists or nil otherwise</p>
 
           
           <div class="method-source-code" id="output_path-source">
-            <pre><span class="ruby-comment"># File lib/video_handler.rb, line 159</span>
+            <pre><span class="ruby-comment"># File lib/video_handler.rb, line 160</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">output_path</span>
   <span class="ruby-ivar">@output_path</span>
 <span class="ruby-keyword">end</span></pre>
@@ -680,7 +684,7 @@ instance if it exists or nil otherwise</p>
 
           
           <div class="method-source-code" id="processing_percentage-source">
-            <pre><span class="ruby-comment"># File lib/video_handler.rb, line 177</span>
+            <pre><span class="ruby-comment"># File lib/video_handler.rb, line 178</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">processing_percentage</span>
   <span class="ruby-ivar">@processing_percentage</span> <span class="ruby-operator">||</span> <span class="ruby-value">0</span>
 <span class="ruby-keyword">end</span></pre>
@@ -713,7 +717,7 @@ instance if it exists or nil otherwise</p>
 
           
           <div class="method-source-code" id="quality-source">
-            <pre><span class="ruby-comment"># File lib/video_handler.rb, line 165</span>
+            <pre><span class="ruby-comment"># File lib/video_handler.rb, line 166</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">quality</span>
   <span class="ruby-ivar">@quality</span>
 <span class="ruby-keyword">end</span></pre>
@@ -747,7 +751,7 @@ instance if it exists or nil otherwise</p>
 
           
           <div class="method-source-code" id="webm_processor-source">
-            <pre><span class="ruby-comment"># File lib/video_handler.rb, line 135</span>
+            <pre><span class="ruby-comment"># File lib/video_handler.rb, line 136</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">webm_processor</span>
   <span class="ruby-identifier">ret</span> = <span class="ruby-keyword">nil</span>
   <span class="ruby-ivar">@processors</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">proc</span><span class="ruby-operator">|</span>

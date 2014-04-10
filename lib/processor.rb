@@ -15,9 +15,10 @@ module RFF
     # * _quality_ - only affects video conversion. Sets the video conversion quality. Defaults to 5000k, which is tested value for good video conversion quality
     # * <i>custom_args</i> - passes custom arguments to FFmpeg. Defaults to nil, which means no custom arguments are given
     # * <i>recommended_audio_quality</i> - determines if recommended by FFmpeg community audio quality settings should be used. Defaults to true, which means audio conversion with good, recommended quality. Set to false if you are giving additional arguments that determine this quality.
+    # * <i>disable_subtitles_decoding</i> - in some formats subtitle decoding causes problems. This option disables this feature. Defaults to true to bypass problems by default.
     # This method also validates arguments, determines full output name, generates appropriate FFmpeg command, determines conversion type and initializes status (it is :pending at this point).
     
-    def initialize input, output_type, output_path=nil, quality="5000k", custom_args=nil, recommended_audio_quality=true
+    def initialize input, output_type, output_path=nil, quality="5000k", custom_args=nil, recommended_audio_quality=true, disable_subtitles_decoding=true
       if input.nil? || input.empty? || output_type.nil?
         raise RFF::ArgumentError.new("Input and output type can not be empty nor nil!")
       end
@@ -31,10 +32,10 @@ module RFF
       @quality = quality
       @custom_args = custom_args
       if [:mp3, :ogg, :wav].include?(@output_type)
-        @command = "ffmpeg -y -i #{@input} -acodec #{@output_type == :mp3 ? "libmp3lame" : (@output_type == :ogg ? "libvorbis" : "pcm_s16le")}#{recommended_audio_quality ? (@output_type == :mp3 ? " -aq 2" : (@output_type == :ogg ? " -aq 4" : "")) : ""}#{@custom_args.nil? ? "" : " #{@custom_args}"} #{@output_path}/#{@output_name}.#{@output_type.to_s}"
+        @command = "ffmpeg -y -i " + '"' + "#{@input}" + '"' + " -acodec #{@output_type == :mp3 ? "libmp3lame" : (@output_type == :ogg ? "libvorbis" : "pcm_s16le")}#{recommended_audio_quality ? (@output_type == :mp3 ? " -aq 2" : (@output_type == :ogg ? " -aq 4" : "")) : ""}#{disable_subtitles_decoding ? " -sn" : ""}#{@custom_args.nil? ? "" : " #{@custom_args}"} " + '"' + "#{@output_path}/#{@output_name}.#{@output_type.to_s}" + '"'
         @conversion_type = :audio
       else
-        @command = "ffmpeg -y -i #{@input} -acodec #{(@output_type == :webm || @output_type == :ogv) ? "libvorbis" : "aac"} -vcodec #{@output_type == :webm ? "libvpx" : (@output_type == :ogv ? "libtheora" : "mpeg4")}#{@output_type == :mp4 ? " -strict -2" : ""}#{(!@quality.nil? && !@quality.empty?) ? " -b:v #{@quality}" : ""}#{recommended_audio_quality ? (@output_type == :webm || @output_type == :ogv ? " -aq 4" : " -b:a 240k") : ""}#{@custom_args.nil? ? "" : " #{@custom_args}"} #{@output_path}/#{@output_name}.#{@output_type.to_s}"
+        @command = "ffmpeg -y -i " + '"' + "#{@input}" + '"' + " -acodec #{(@output_type == :webm || @output_type == :ogv) ? "libvorbis" : "aac"} -vcodec #{@output_type == :webm ? "libvpx" : (@output_type == :ogv ? "libtheora" : "mpeg4")}#{@output_type == :mp4 ? " -strict -2" : ""}#{(!@quality.nil? && !@quality.empty?) ? " -b:v #{@quality}" : ""}#{recommended_audio_quality ? (@output_type == :webm || @output_type == :ogv ? " -aq 4" : " -b:a 240k") : ""}#{disable_subtitles_decoding ? " -sn" : ""}#{@custom_args.nil? ? "" : " #{@custom_args}"} " + '"' + "#{@output_path}/#{@output_name}.#{@output_type.to_s}" + '"'
         @conversion_type = :video
       end
       @status = :pending

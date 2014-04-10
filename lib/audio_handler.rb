@@ -15,9 +15,10 @@ module RFF
     # * <i>output_path</i> - a path to place the output file in. Defaults to nil, which means that the input' s directory path is used
     # * <i>custom_args</i> - passes custom arguments to FFmpeg. Defaults to nil, which means no custom arguments are given
     # * <i>recommended_audio_quality</i> - determines if recommended by FFmpeg community audio quality settings should be used. Defaults to true, which means audio conversion with good, recommended quality. Set to false if you are giving additional arguments that determine this quality.
+    # * <i>disable_subtitles_decoding</i> - in some formats subtitle decoding causes problems. This option disables this feature. Defaults to true to bypass problems by default.
     # All of the arguments are passed on to underlying Processor instances. This method also determines input type, initializes processing percentage and creates needed Processor instances.
     
-    def initialize input, output_path=nil, custom_args=nil, recommended_audio_quality=true
+    def initialize input, output_path=nil, custom_args=nil, recommended_audio_quality=true, disable_subtitles_decoding=true
       @input = input
       @input_type = File.basename(@input).split(".")[1]
       @output_path = output_path
@@ -29,7 +30,7 @@ module RFF
         types.delete(@input_type.to_sym)
       end
       types.each do |type|
-        @processors << RFF::Processor.new(@input, type, @output_path, nil, @custom_args, recommended_audio_quality)
+        @processors << RFF::Processor.new(@input, type, @output_path, nil, @custom_args, recommended_audio_quality, disable_subtitles_decoding)
       end
     end
     
