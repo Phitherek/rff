@@ -88,7 +88,7 @@ The constructor of VideoHandler takes the same parameters that this of Processor
 
 == Gem status
 
-Version 0.2 with an important bugfix is out!
+Version 0.2.1 fixes some minor problems with paths and some format combinations.
 
 ---
 
