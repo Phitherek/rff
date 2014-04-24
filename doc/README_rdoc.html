@@ -120,7 +120,7 @@ done, length of processed file etc.).</p>
 
 <h2 id="label-Changelog">Changelog<span><a href="#label-Changelog">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
 <ul><li>
-<p>version 0.1 - Written the gem classes</p>
+<p>version 0.1 - Written the gem classes (DO NOT USE THIS VERSION)</p>
 </li><li>
 <p>version 0.2 - Got rid of the bug with mixing outputs in OutputReader&#39; s
 buffer (was a static variable, now it is instance variable. Yeah, WHAT WAS
@@ -130,6 +130,16 @@ I THINKING then?). Documented the code. Made small bugfixes.</p>
 strange characters. Added the -sn option to the FFmpeg command and
 disable_subtitles_decoding parameter to Processor and handlers to bypass
 subtitle decoding errors with some format combinations.</p>
+</li><li>
+<p>version 0.2.2 - FFmpeg existence is ensured on installation time. (DO NOT
+USE THIS VERSION)</p>
+</li><li>
+<p>version 0.2.3 - Bugfix on extconf.rb. (DO NOT USE THIS VERSION)</p>
+</li><li>
+<p>version 0.2.4 - Added dummy Makefile to gem specification. (DO NOT USE THIS
+VERSION)</p>
+</li><li>
+<p>version 0.2.5 - Fix of whitespaces in dummy Makefile.</p>
 </li></ul>
 <hr style="height: 1px">
 
@@ -223,7 +233,8 @@ documentation.</p>
 
 <h2 id="label-Gem+status">Gem status<span><a href="#label-Gem+status">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
 
-<p>Version 0.2 with an important bugfix is out!</p>
+<p>Version 0.2.5 is the version where finally check for FFmpeg works as
+expected.</p>
 <hr style="height: 1px">
 
 <h2 id="label-Important+information">Important information<span><a href="#label-Important+information">&para;</a> <a href="#documentation">&uarr;</a></span></h2>

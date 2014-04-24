@@ -12,9 +12,13 @@ The idea behind _rff_ is to be <b>simple media converting gem</b> based on *FFmp
 
 == Changelog
 
-* version 0.1 - Written the gem classes
+* version 0.1 - Written the gem classes (DO NOT USE THIS VERSION)
 * version 0.2 - Got rid of the bug with mixing outputs in OutputReader' s buffer (was a static variable, now it is instance variable. Yeah, WHAT WAS I THINKING then?). Documented the code. Made small bugfixes.
 * version 0.2.1 - Wrapped the paths into "" to allow whitespaces and other strange characters. Added the -sn option to the FFmpeg command and disable_subtitles_decoding parameter to Processor and handlers to bypass subtitle decoding errors with some format combinations.
+* version 0.2.2 - FFmpeg existence is ensured on installation time. (DO NOT USE THIS VERSION)
+* version 0.2.3 - Bugfix on extconf.rb. (DO NOT USE THIS VERSION)
+* version 0.2.4 - Added dummy Makefile to gem specification. (DO NOT USE THIS VERSION)
+* version 0.2.5 - Fix of whitespaces in dummy Makefile.
 
 ---
 
@@ -88,7 +92,7 @@ The constructor of VideoHandler takes the same parameters that this of Processor
 
 == Gem status
 
-Version 0.2.1 fixes some minor problems with paths and some format combinations.
+Version 0.2.5 is the version where finally check for FFmpeg works as expected.
 
 ---
 
