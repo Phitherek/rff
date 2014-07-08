@@ -19,6 +19,7 @@ The idea behind _rff_ is to be <b>simple media converting gem</b> based on *FFmp
 * version 0.2.3 - Bugfix on extconf.rb. (DO NOT USE THIS VERSION)
 * version 0.2.4 - Added dummy Makefile to gem specification. (DO NOT USE THIS VERSION)
 * version 0.2.5 - Fix of whitespaces in dummy Makefile.
+* version 0.2.6 - If input file is in one of needed formats and is not converted, copy it to the output directory - in handlers. Added output directory creation in handlers.
 
 ---
 
@@ -92,7 +93,7 @@ The constructor of VideoHandler takes the same parameters that this of Processor
 
 == Gem status
 
-Version 0.2.5 is the version where finally check for FFmpeg works as expected.
+Version 0.2.6 introduces output directory creation and copying files excluded from one conversion to output directory in handlers, so there are always all needed files in output directory.
 
 ---
 

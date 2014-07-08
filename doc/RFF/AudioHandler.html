@@ -148,8 +148,9 @@
 <p>This class provides an “All audio to HTML5” conversion functionality. It
 takes every compatible with FFmpeg audio format and converts it to the
 three HTML5 audio formats - mp3, ogg and wav. If the input is already in
-one of these formats it is only converted to the two other formats, because
-it can be used as one of HTML5 sources.</p>
+one of these formats it is only converted to the two other formats and the
+original file is copied to the output directory, because it can be used as
+one of HTML5 sources.</p>
 
   </div><!-- description -->
 
@@ -214,7 +215,7 @@ href="Processor.html">Processor</a> instances.</p>
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 21</span>
+            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 22</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">input</span>, <span class="ruby-identifier">output_path</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">custom_args</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">recommended_audio_quality</span>=<span class="ruby-keyword">true</span>, <span class="ruby-identifier">disable_subtitles_decoding</span>=<span class="ruby-keyword">true</span>
   <span class="ruby-ivar">@input</span> = <span class="ruby-identifier">input</span>
   <span class="ruby-ivar">@input_type</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-ivar">@input</span>).<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;.&quot;</span>)[<span class="ruby-value">1</span>]
@@ -223,8 +224,14 @@ href="Processor.html">Processor</a> instances.</p>
   <span class="ruby-ivar">@processing_percentage</span> = <span class="ruby-value">0</span>
   <span class="ruby-ivar">@processors</span> = []
   <span class="ruby-identifier">types</span> = [<span class="ruby-value">:mp3</span>, <span class="ruby-value">:ogg</span>, <span class="ruby-value">:wav</span>]
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@output_path</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-ivar">@output_path</span>)
+      <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-ivar">@output_path</span>)
+  <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">types</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-ivar">@input_type</span>.<span class="ruby-identifier">to_sym</span>)
     <span class="ruby-identifier">types</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-ivar">@input_type</span>.<span class="ruby-identifier">to_sym</span>)
+    <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@output_path</span>.<span class="ruby-identifier">nil?</span>
+        <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">cp</span> <span class="ruby-ivar">@input</span>, <span class="ruby-ivar">@output_path</span>
+    <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">types</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">type</span><span class="ruby-operator">|</span>
     <span class="ruby-ivar">@processors</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">RFF</span><span class="ruby-operator">::</span><span class="ruby-constant">Processor</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@input</span>, <span class="ruby-identifier">type</span>, <span class="ruby-ivar">@output_path</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-ivar">@custom_args</span>, <span class="ruby-identifier">recommended_audio_quality</span>, <span class="ruby-identifier">disable_subtitles_decoding</span>)
@@ -265,7 +272,7 @@ href="Processor.html">Processor</a> instances.</p>
 
           
           <div class="method-source-code" id="custom_args-source">
-            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 169</span>
+            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 176</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">custom_args</span>
   <span class="ruby-ivar">@custom_args</span>
 <span class="ruby-keyword">end</span></pre>
@@ -302,7 +309,7 @@ it to 100% on finish</p>
 
           
           <div class="method-source-code" id="fire_all-source">
-            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 39</span>
+            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 46</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">fire_all</span>
   <span class="ruby-ivar">@processing_thread</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">th</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">begin</span>
@@ -374,7 +381,7 @@ it to 100% on finish</p>
 
           
           <div class="method-source-code" id="fire_sequential-source">
-            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 79</span>
+            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 86</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">fire_sequential</span>
   <span class="ruby-ivar">@processing_thread</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">th</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">begin</span>
@@ -428,7 +435,7 @@ it to 100% on finish</p>
 
           
           <div class="method-source-code" id="format_processing_percentage-source">
-            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 181</span>
+            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 188</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">format_processing_percentage</span>
   <span class="ruby-ivar">@processing_percentage</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">?</span> <span class="ruby-string">&quot;0%&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-ivar">@processing_percentage</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;%&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -461,7 +468,7 @@ it to 100% on finish</p>
 
           
           <div class="method-source-code" id="input-source">
-            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 151</span>
+            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 158</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">input</span>
   <span class="ruby-ivar">@input</span>
 <span class="ruby-keyword">end</span></pre>
@@ -495,7 +502,7 @@ href="Processor.html">Processor</a> instances and its own processing thread</p>
 
           
           <div class="method-source-code" id="killall-source">
-            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 106</span>
+            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 113</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">killall</span>
   <span class="ruby-ivar">@processors</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">proc</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">proc</span>.<span class="ruby-identifier">kill</span>
@@ -532,7 +539,7 @@ instance if it exists or nil otherwise</p>
 
           
           <div class="method-source-code" id="mp3_processor-source">
-            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 115</span>
+            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 122</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">mp3_processor</span>
   <span class="ruby-identifier">ret</span> = <span class="ruby-keyword">nil</span>
   <span class="ruby-ivar">@processors</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">proc</span><span class="ruby-operator">|</span>
@@ -572,7 +579,7 @@ instance if it exists or nil otherwise</p>
 
           
           <div class="method-source-code" id="ogg_processor-source">
-            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 127</span>
+            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 134</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">ogg_processor</span>
   <span class="ruby-identifier">ret</span> = <span class="ruby-keyword">nil</span>
   <span class="ruby-ivar">@processors</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">proc</span><span class="ruby-operator">|</span>
@@ -611,7 +618,7 @@ instance if it exists or nil otherwise</p>
 
           
           <div class="method-source-code" id="output_name-source">
-            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 157</span>
+            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 164</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">output_name</span>
   <span class="ruby-ivar">@output_name</span>
 <span class="ruby-keyword">end</span></pre>
@@ -644,7 +651,7 @@ instance if it exists or nil otherwise</p>
 
           
           <div class="method-source-code" id="output_path-source">
-            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 163</span>
+            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 170</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">output_path</span>
   <span class="ruby-ivar">@output_path</span>
 <span class="ruby-keyword">end</span></pre>
@@ -677,7 +684,7 @@ instance if it exists or nil otherwise</p>
 
           
           <div class="method-source-code" id="processing_percentage-source">
-            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 175</span>
+            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 182</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">processing_percentage</span>
   <span class="ruby-ivar">@processing_percentage</span> <span class="ruby-operator">||</span> <span class="ruby-value">0</span>
 <span class="ruby-keyword">end</span></pre>
@@ -711,7 +718,7 @@ instance if it exists or nil otherwise</p>
 
           
           <div class="method-source-code" id="wav_processor-source">
-            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 139</span>
+            <pre><span class="ruby-comment"># File lib/audio_handler.rb, line 146</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">wav_processor</span>
   <span class="ruby-identifier">ret</span> = <span class="ruby-keyword">nil</span>
   <span class="ruby-ivar">@processors</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">proc</span><span class="ruby-operator">|</span>

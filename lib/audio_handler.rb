@@ -1,4 +1,5 @@
 require_relative 'processor'
+require 'fileutils'
 
 # The main module for _rff_ -  a Ruby gem for simple audio and video conversion for HTML5 using FFmpeg
 # Author:: Phitherek_ <phitherek [at] gmail [dot] com>
@@ -6,7 +7,7 @@ require_relative 'processor'
 
 module RFF
   
-  # This class provides an "All audio to HTML5" conversion functionality. It takes every compatible with FFmpeg audio format and converts it to the three HTML5 audio formats - mp3, ogg and wav. If the input is already in one of these formats it is only converted to the two other formats, because it can be used as one of HTML5 sources.
+  # This class provides an "All audio to HTML5" conversion functionality. It takes every compatible with FFmpeg audio format and converts it to the three HTML5 audio formats - mp3, ogg and wav. If the input is already in one of these formats it is only converted to the two other formats and the original file is copied to the output directory, because it can be used as one of HTML5 sources.
   
   class AudioHandler
     
@@ -26,8 +27,14 @@ module RFF
       @processing_percentage = 0
       @processors = []
       types = [:mp3, :ogg, :wav]
+      if !@output_path.nil? && !File.exists?(@output_path)
+          FileUtils.mkdir_p(@output_path)
+      end
       if types.include?(@input_type.to_sym)
         types.delete(@input_type.to_sym)
+        if !@output_path.nil?
+            FileUtils.cp @input, @output_path
+        end
       end
       types.each do |type|
         @processors << RFF::Processor.new(@input, type, @output_path, nil, @custom_args, recommended_audio_quality, disable_subtitles_decoding)

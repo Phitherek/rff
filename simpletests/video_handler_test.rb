@@ -1,5 +1,5 @@
 require_relative '../lib/video_handler'
-vh = RFF::VideoHandler.new("./Pliki DAP/00189.MTS")
+vh = RFF::VideoHandler.new("testvid.mp4")
 vh.fire_all
 while vh.processing_percentage == nil || vh.processing_percentage < 100
   if vh.webm_processor != nil
