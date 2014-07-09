@@ -20,7 +20,8 @@ The idea behind _rff_ is to be <b>simple media converting gem</b> based on *FFmp
 * version 0.2.4 - Added dummy Makefile to gem specification. (DO NOT USE THIS VERSION)
 * version 0.2.5 - Fix of whitespaces in dummy Makefile.
 * version 0.2.6 - If input file is in one of needed formats and is not converted, copy it to the output directory - in handlers. Added output directory creation in handlers.
-* version 0.2.7 - There is one more possible "faulty" time that prevents rff from counting percentage - "N/A". Bug fixed.
+* version 0.2.7 - There is one more possible "faulty" time that prevents rff from counting percentage - "N/A".
+* version 0.2.8 - "N/A" bug strikes again! Fixed hopefully.
 
 ---
 
@@ -94,7 +95,7 @@ The constructor of VideoHandler takes the same parameters that this of Processor
 
 == Gem status
 
-Version 0.2.7 fixes a bug when the returned status time is "N/A".
+Version 0.2.8 fixes a bug when the returned status time is "N/A".
 
 ---
 

@@ -285,7 +285,7 @@ module RFF
                       line.split(" ").each do |spl|
                         @processing_status[spl.split("=")[0].to_sym] = spl.split("=")[1]
                       end
-                      if @processing_status[:time] != nil && @processing_status[:time] != "N/A" && @input_duration != nil
+                      if @processing_status[:time] != nil && @processing_status[:time] != "N/A" && @input_duration != nil && @input_duration != "N/A"
                         @processing_percentage = ((((Time.parse(@processing_status[:time])-Time.parse("0:0"))/(Time.parse(@input_duration)-Time.parse("0:0")))).round(2)*100).to_i #/ This is for jEdit syntax highlighting to fix
                       end
                     end
