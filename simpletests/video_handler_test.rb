@@ -1,5 +1,5 @@
 require_relative '../lib/video_handler'
-vh = RFF::VideoHandler.new("testvid.mp4")
+vh = RFF::VideoHandler.new("testvid.webm")
 vh.fire_all
 while vh.processing_percentage == nil || vh.processing_percentage < 100
   if vh.webm_processor != nil
