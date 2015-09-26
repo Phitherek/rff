@@ -214,5 +214,9 @@ module RFF
     def format_processing_percentage
       @processing_percentage.nil? ? "0%" : @processing_percentage.to_s + "%"
     end
+
+    def handler_status
+        @handler_status
+    end
   end
 end
