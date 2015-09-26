@@ -1,7 +1,7 @@
 require_relative '../lib/video_handler'
 vh = RFF::VideoHandler.new("testvid.webm")
 vh.fire_all
-while vh.processing_percentage == nil || vh.processing_percentage < 100
+while (vh.processing_percentage == nil || vh.processing_percentage < 100) && (vh.handler_status == :ready || vh.handler_status == :processing)
   if vh.webm_processor != nil
     puts "WEBM status: " + vh.webm_processor.format_processing_percentage
   end

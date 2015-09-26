@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
 	s.name = 'rff'
-	s.version = '0.2.10'
+	s.version = '0.3'
 	s.date = '2015-09-26'
 	s.summary = 'A simple Ruby audio/video converter to HTML5 formats using FFmpeg'
 	s.description = "This gem provides a simple Ruby interface to FFmpeg enabling users to convert audio and video to HTML5 supported formats and monitor the process as it goes."
