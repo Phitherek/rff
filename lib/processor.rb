@@ -92,9 +92,9 @@ module RFF
                     else
                       #puts "DEBUG: Reading metadata line..."
                       if @last_met_io == :input
-                        @input_meta_audio[line.split(":")[0].downcase[0..-2].to_sym] = line.split(":")[1][1..-1]
+                        @input_meta_audio[line.split(":")[0].downcase[0..-2].to_sym] = line.split(":")[1][1..-1] if !line.split(":")[0].nil?
                       elsif @last_met_io == :output
-                        @output_meta_audio[line.split(":")[0].downcase[0..-2].to_sym] = line.split(":")[1][1..-1]
+                        @output_meta_audio[line.split(":")[0].downcase[0..-2].to_sym] = line.split(":")[1][1..-1] if !line.split(":")[0].nil?
                       end
                     end
                   end

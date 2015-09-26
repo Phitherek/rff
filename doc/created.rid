@@ -1,8 +1,8 @@
-Wed, 09 Jul 2014 03:49:40 +0200
-README.rdoc	Wed, 09 Jul 2014 03:48:46 +0200
-lib/video_handler.rb	Tue, 08 Jul 2014 20:45:39 +0200
-lib/rff.rb	Wed, 02 Apr 2014 01:43:36 +0200
-lib/processor.rb	Wed, 09 Jul 2014 03:46:38 +0200
-lib/output_reader.rb	Fri, 04 Apr 2014 21:07:58 +0200
-lib/audio_handler.rb	Tue, 08 Jul 2014 20:44:53 +0200
-lib/exceptions.rb	Fri, 04 Apr 2014 17:53:42 +0200
+Tue, 25 Nov 2014 00:29:19 +0100
+README.rdoc	Tue, 25 Nov 2014 00:21:08 +0100
+lib/video_handler.rb	Sat, 04 Oct 2014 19:45:19 +0200
+lib/exceptions.rb	Sat, 04 Oct 2014 19:45:19 +0200
+lib/output_reader.rb	Sat, 04 Oct 2014 19:45:19 +0200
+lib/rff.rb	Sat, 04 Oct 2014 19:45:19 +0200
+lib/audio_handler.rb	Sat, 04 Oct 2014 19:45:19 +0200
+lib/processor.rb	Tue, 25 Nov 2014 00:20:25 +0100
